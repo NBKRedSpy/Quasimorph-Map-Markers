@@ -45,4 +45,4 @@ Thanks!
 * [Annotely](https://annotely.com/) for image annotation.
 
 # Source Code
-Source code is available on GitHub at https://github.com/NBKRedSpy/MapMarkers
+Source code is available on GitHub at https://github.com/NBKRedSpy/Quasimorph-Map-Markers
