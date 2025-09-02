@@ -1,0 +1,80 @@
+﻿using HarmonyLib;
+using MGSC;
+using Newtonsoft.Json;
+using MapMarkers.Utility;
+using SimpleJSON;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace MapMarkers
+{
+    public static class Plugin
+    {
+
+
+        /// <summary>
+        /// The Point of Interest entries for the currently loaded save.
+        /// </summary>
+        internal static PoiLocations CurrentSavePoiStorage { get; set; }
+
+        /// <summary>
+        /// The slot number for the save that is currently loaded.
+        /// </summary>
+        internal static int LoadedSlotNumber { get; set; }  
+
+        public static ConfigDirectories ConfigDirectories = new ConfigDirectories();
+
+        public static ModConfig Config { get; private set; }
+
+        public static Utility.Logger Logger = new();
+
+        public static State State { get; private set; }
+
+        private static McmConfiguration McmConfiguration;
+
+        [Hook(ModHookType.AfterConfigsLoaded)]
+        public static void AfterConfig(IModContext context)
+        {
+            Directory.CreateDirectory(ConfigDirectories.ModPersistenceFolder);
+            State = context.State;
+
+            Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath, Logger);
+
+            McmConfiguration = new McmConfiguration(Config, Logger);
+            McmConfiguration.TryConfigure();
+
+
+            new Harmony("NBKRedSpy_" + ConfigDirectories.ModAssemblyName).PatchAll();
+        }
+
+        /// <summary>
+        /// Creates or loads the Point of Interest data for the currently loaded save.
+        /// </summary>
+        public static void CreateOrLoadCurrentPoi(string locationId)
+        {
+            try
+            {
+                int slot = State.Get<SavedGameMetadata>().Slot;
+
+                PoiLocations location = PoiLocations.CreateOrLoad(ConfigDirectories.ModPersistenceFolder, slot, Logger);
+                CurrentSavePoiStorage = location;
+                location.SetDungeonLevel(locationId);
+                location.Save();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error creating or loading the POI data");
+                CurrentSavePoiStorage = null;
+            }
+
+        }
+    }
+}
