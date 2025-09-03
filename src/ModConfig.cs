@@ -29,6 +29,10 @@ public class ModConfig : PersistentConfig<ModConfig>, IMcmConfigTarget
     [JsonConverter(typeof(StringEnumConverter))]
     public KeyCode AddPlayerLocationKey { get; set; } = KeyCode.L;
 
+    /// <summary>
+    /// The font size to use for the marker's content text.
+    /// </summary>
+    public float FontSize { get; set; } = 5f;
 
     /// <summary>
     /// The color of the minimap point of interest indicator.

@@ -6,7 +6,11 @@ Allows the user to add markers to the minimap.  For instance, mark the location 
 To use: Open the mini map and right click a location.  Right click again to toggle the location off.
 Press the delete key to clear all markers for the current floor.
 
+Hovering over a marker will show all the items at that location. *
+
 The settings can be configured.
+
+* This could be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
 
 [h1]Configuration[/h1]
 
@@ -58,7 +62,21 @@ The configuration file will be created on the first game run and can be found at
 [td]The color of the markers.
 [/td]
 [/tr]
+[tr]
+[td]FontSize
+[/td]
+[td]5
+[/td]
+[td]The size of the text to use for the marker's content text.  Important!  See FontSize note below.
+[/td]
+[/tr]
 [/table]
+
+[h3]FontSize Note for MCM[/h3]
+
+Only use the slider in the Mod Config Menu.  The number cannot be typed in currently.  Additionally, pressing backspace closes the mod settings UI, which causes the config UI to become confused.
+
+The number does not have to be perfect, so 5.02 vs 5.0 makes no real difference.
 
 [h2]Key List[/h2]
 
@@ -75,9 +93,14 @@ Thanks!
 
 [h1]Issues[/h1]
 [list]
-[*]Placing a marker at the merc's location can be hard to see due to the marc icon being on top.
-[*]No ability to add notes.  Recommend using an alternative such as Steam's overlay notes.
-[*]No displayed cell number.  Does not show the cell number under the cursor, which could be helpful with creating notes.
+[*]Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
+[/list]
+
+[h1]Change Log[/h1]
+
+[h2]1.1.0[/h2]
+[list]
+[*]Added listing the items at a marker when hovered.
 [/list]
 
 [h1]Credits[/h1]

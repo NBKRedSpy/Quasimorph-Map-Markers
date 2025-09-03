@@ -18,6 +18,8 @@ namespace MapMarkers
             {
                 CreateConfigProperty(nameof(ModConfig.MarkerColorTransform),
                     @"The color of point of interest point on the minimap","Marker Color"),
+                CreateConfigProperty(nameof(ModConfig.FontSize),
+                    @"The size of the text to use for the marker's content text.",1,20),
                 CreateReadOnly(nameof(ModConfig.AddLocationKey)),
                 CreateReadOnly(nameof(ModConfig.AddPlayerLocationKey)),
                 CreateReadOnly(nameof(ModConfig.ClearLocationsKey)),

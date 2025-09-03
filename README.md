@@ -6,7 +6,11 @@ Allows the user to add markers to the minimap.  For instance, mark the location 
 To use: Open the mini map and right click a location.  Right click again to toggle the location off.
 Press the delete key to clear all markers for the current floor.
 
+Hovering over a marker will show all the items at that location. \*
+
 The settings can be configured.
+
+\* This could be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
 
 # Configuration
 
@@ -22,6 +26,12 @@ The configuration file will be created on the first game run and can be found at
 |AddLocationKey|Right Click|The key or mouse button to add or remove a marker.|
 |AddPlayerLocationKey|L|Adds a marker the the player's current location.|
 |MarkerColor|Red|The color of the markers.|
+|FontSize|5|The size of the text to use for the marker's content text.  Important!  See FontSize note below.|
+
+### FontSize Note for MCM
+Only use the slider in the Mod Config Menu.  The number cannot be typed in currently.  Additionally, pressing backspace closes the mod settings UI, which causes the config UI to become confused.
+
+The number does not have to be perfect, so 5.02 vs 5.0 makes no real difference.
 
 ## Key List
 The list of valid keyboard keys can be found  at the bottom of https://docs.unity3d.com/ScriptReference/KeyCode.html
@@ -35,9 +45,11 @@ It helps motivate me to maintain as well as create mods.
 Thanks!  
 
 # Issues
-* Placing a marker at the merc's location can be hard to see due to the marc icon being on top.
-* No ability to add notes.  Recommend using an alternative such as Steam's overlay notes.
-* No displayed cell number.  Does not show the cell number under the cursor, which could be helpful with creating notes.
+* Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
+
+# Change Log
+## 1.1.0
+* Added listing the items at a marker when hovered.
 
 # Credits
 * Special thanks to Crynano for his excellent Mod Configuration Menu. 
