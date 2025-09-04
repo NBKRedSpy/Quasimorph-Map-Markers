@@ -8,7 +8,6 @@
 	<PropertyGroup>
 		<!-- Set this value to your mod's Steam Workhop ID -->
 		<SteamId>3559945916</SteamId>
-		<MCM_PATH>$(GAME_PATH)\..\..\workshop\content\2059170\3469678797\MCM.dll</MCM_PATH>
 	</PropertyGroup>
 	<PropertyGroup>
 		<GAME_NAME>Quasimorph</GAME_NAME>
@@ -21,6 +20,7 @@
 		<ManagedPath>$(GAME_PATH)\$(GAME_NAME)_Data\Managed\</ManagedPath>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<PackageFolder>$(ProjectDir)../package/</PackageFolder>
+		<MCM_PATH>$(GAME_PATH)\..\..\workshop\content\2059170\3469678797\MCM.dll</MCM_PATH>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="MCM">
