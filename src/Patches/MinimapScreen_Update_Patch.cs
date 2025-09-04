@@ -53,7 +53,9 @@ internal static class MinimapScreen_Update_Patch
 
                     locations.Save();
 
-                    __instance._fogOfWar.RefreshMinimap(__instance._locationMetadata.ScanMonsters, __instance._locationMetadata.ScanItems, __instance._locationMetadata.ScanExit);
+                    RefreshMap(__instance);
+                    Plugin.PlayClickSound();
+
                 }
             }
 
@@ -63,6 +65,7 @@ internal static class MinimapScreen_Update_Patch
                 locations.CurrentDungeonLevelPois.Clear();
                 locations.Save();
 
+                Plugin.PlayClickSound();
                 RefreshMap(__instance);
             }
 
@@ -85,6 +88,8 @@ internal static class MinimapScreen_Update_Patch
                 {
                     locations.CurrentDungeonLevelPois.Add(pos);
                 }
+
+                Plugin.PlayClickSound();
 
                 locations.Save();
 

@@ -27,7 +27,16 @@ public class ModConfig : PersistentConfig<ModConfig>, IMcmConfigTarget
     /// Adds a location under the player's current location
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public KeyCode AddPlayerLocationKey { get; set; } = KeyCode.L;
+    public KeyCode AddPlayerLocationKey { get; set; } = KeyCode.F2;
+
+    /// <summary>
+    /// Adds a marker at the current location when not in the mini map.
+    /// Note - This does not toggle; it only adds.
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public KeyCode AddPlayerLocationOnDungeonKey { get; set; } = KeyCode.F2;
+
+
 
     /// <summary>
     /// The font size to use for the marker's content text.

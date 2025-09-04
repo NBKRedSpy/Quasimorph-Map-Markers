@@ -3,14 +3,20 @@
 
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
 
-To use: Open the mini map and right click a location.  Right click again to toggle the location off.
-Press the delete key to clear all markers for the current floor.
+To use: 
 
-Hovering over a marker will show all the items at that location. \*
+When in the Mini Map:
+* Right click to add or remove a location under the cursor.
+* Press F2 to add or remove a marker at the player's location
+
+When in inventory or when not in the minimap:
+* Press F2 to add a marker at the player's location.  Note that this *only* adds markers to prevent accidentally removing a marker.
+
+Hovering over a marker will show all the items at that location\*.
 
 The settings can be configured.
 
-\* This could be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
+\* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
 
 # Configuration
 
@@ -24,7 +30,8 @@ The configuration file will be created on the first game run and can be found at
 |--|--|--|
 |ClearLocationsKey|Delete|Deletes all of the map markers for the current level.|
 |AddLocationKey|Right Click|The key or mouse button to add or remove a marker.|
-|AddPlayerLocationKey|L|Adds a marker the the player's current location.|
+|AddPlayerLocationKey|F2|Adds or removes a marker the the player's current location.|
+|AddPlayerLocationOnDungeonKey|F2|Adds a marker to the player's current location not in the minimap.  This *only* adds|
 |MarkerColor|Red|The color of the markers.|
 |FontSize|5|The size of the text to use for the marker's content text.  Important!  See FontSize note below.|
 
@@ -48,6 +55,11 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
+## 1.1.0
+* Added hotkey to add a marker when in inventory and not the mini map.
+* Added game's "Click" sounds to the actions.
+* Changed defaults of "Add Marker" to F2
+
 ## 1.1.0
 * Added listing the items at a marker when hovered.
 

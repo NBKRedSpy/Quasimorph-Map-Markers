@@ -3,14 +3,24 @@
 
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
 
-To use: Open the mini map and right click a location.  Right click again to toggle the location off.
-Press the delete key to clear all markers for the current floor.
+To use:
 
-Hovering over a marker will show all the items at that location. *
+When in the Mini Map:
+[list]
+[*]Right click to add or remove a location under the cursor.
+[*]Press F2 to add or remove a marker at the player's location
+[/list]
+
+When in inventory or when not in the minimap:
+[list]
+[*]Press F2 to add a marker at the player's location.  Note that this [i]only[/i] adds markers to prevent accidentally removing a marker.
+[/list]
+
+Hovering over a marker will show all the items at that location*.
 
 The settings can be configured.
 
-* This could be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
+* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
 
 [h1]Configuration[/h1]
 
@@ -49,9 +59,17 @@ The configuration file will be created on the first game run and can be found at
 [tr]
 [td]AddPlayerLocationKey
 [/td]
-[td]L
+[td]F2
 [/td]
-[td]Adds a marker the the player's current location.
+[td]Adds or removes a marker the the player's current location.
+[/td]
+[/tr]
+[tr]
+[td]AddPlayerLocationOnDungeonKey
+[/td]
+[td]F2
+[/td]
+[td]Adds a marker to the player's current location not in the minimap.  This [i]only[/i] adds
 [/td]
 [/tr]
 [tr]
@@ -97,6 +115,13 @@ Thanks!
 [/list]
 
 [h1]Change Log[/h1]
+
+[h2]1.1.0[/h2]
+[list]
+[*]Added hotkey to add a marker when in inventory and not the mini map.
+[*]Added game's "Click" sounds to the actions.
+[*]Changed defaults of "Add Marker" to F2
+[/list]
 
 [h2]1.1.0[/h2]
 [list]

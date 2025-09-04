@@ -3,6 +3,7 @@ using MapMarkers.Utility.Mcm;
 using ModConfigMenu;
 using ModConfigMenu.Objects;
 using System.Collections.Generic;
+using UnityEngine;
 using Logger = MapMarkers.Utility.Logger;
 
 namespace MapMarkers
@@ -22,7 +23,9 @@ namespace MapMarkers
                     @"The size of the text to use for the marker's content text.",1,20),
                 CreateReadOnly(nameof(ModConfig.AddLocationKey)),
                 CreateReadOnly(nameof(ModConfig.AddPlayerLocationKey)),
-                CreateReadOnly(nameof(ModConfig.ClearLocationsKey)),
+                CreateReadOnly(nameof(ModConfig.AddPlayerLocationOnDungeonKey)),
+
+        CreateReadOnly(nameof(ModConfig.ClearLocationsKey)),
 
             }, OnSave);
         }

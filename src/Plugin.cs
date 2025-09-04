@@ -76,5 +76,10 @@ namespace MapMarkers
             }
 
         }
+
+        public static void PlayClickSound()
+        {
+            SingletonMonoBehaviour<SoundController>.Instance.PlayUiSound(SingletonMonoBehaviour<SoundsStorage>.Instance.ButtonClick);
+        }
     }
 }
