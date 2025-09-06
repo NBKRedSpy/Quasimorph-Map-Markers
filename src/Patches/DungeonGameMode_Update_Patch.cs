@@ -22,9 +22,12 @@ internal static class DungeonGameMode_Update_Patch
 		try
 		{
             //Player's current location
-            if (Input.GetKeyDown(Plugin.Config.AddPlayerLocationOnDungeonKey) 
-                && !UI.IsAnyShowing(typeof(DungeonHudScreen), typeof(InventoryScreen)))
+            //if (Input.GetKeyDown(Plugin.Config.AddPlayerLocationOnDungeonKey) 
+            //    && !UI.IsAnyShowing(typeof(DungeonHudScreen), typeof(InventoryScreen)))
+            if (Input.GetKeyDown(Plugin.Config.AddPlayerLocationOnDungeonKey))
             {
+                if (UI.IsAnyShowing(typeof(DungeonHudScreen), typeof(InventoryScreen), typeof(CorpseInspectWindow))) return;
+
                 PoiLocations locations = Plugin.CurrentSavePoiStorage;
 
                 if (locations == null)

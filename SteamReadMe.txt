@@ -116,7 +116,12 @@ Thanks!
 
 [h1]Change Log[/h1]
 
-[h2]1.1.0[/h2]
+[h2]1.2.1[/h2]
+[list]
+[*]Fixed the "not in minimap screen" mode did not place marker when storage was open.
+[/list]
+
+[h2]1.2.0[/h2]
 [list]
 [*]Added hotkey to add a marker when in inventory and not the mini map.
 [*]Added game's "Click" sounds to the actions.

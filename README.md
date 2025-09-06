@@ -55,7 +55,10 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
-## 1.1.0
+## 1.2.1
+* Fixed the "not in minimap screen" mode did not place marker when storage was open.
+
+## 1.2.0
 * Added hotkey to add a marker when in inventory and not the mini map.
 * Added game's "Click" sounds to the actions.
 * Changed defaults of "Add Marker" to F2
