@@ -116,6 +116,12 @@ Thanks!
 
 [h1]Change Log[/h1]
 
+[h2]1.3.0[/h2]
+[list]
+[*]Primary sort is now price.
+[*]The count per item includes the stack count.  Ex: '9mm x120' instead of '9mm x2'
+[/list]
+
 [h2]1.2.1[/h2]
 [list]
 [*]Fixed the "not in minimap screen" mode did not place marker when storage was open.

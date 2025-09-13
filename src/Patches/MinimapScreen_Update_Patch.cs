@@ -1,7 +1,9 @@
-﻿using HarmonyLib;
+﻿using AsmResolver.PE.DotNet.ReadyToRun;
+using HarmonyLib;
 using MGSC;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +18,7 @@ namespace MapMarkers.Patches;
 /// Handles adding and removing locations on the minimap screen
 /// </summary>
 [HarmonyPatch(typeof(MinimapScreen), nameof(MinimapScreen.Update))]
-internal static class MinimapScreen_Update_Patch
+internal static partial class MinimapScreen_Update_Patch
 {
 
     public static void Postfix(MinimapScreen __instance)
@@ -123,20 +125,19 @@ internal static class MinimapScreen_Update_Patch
 
         StringBuilder sb = new StringBuilder();
         
-        List<(BasePickupItem Item, int Count)> groupedCount = GetAllCellItems(__instance, cursorCell);
+        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell);
 
         //COPY WARNING:  MGSC.MinimapScreen.RefreshLabelUnderCursor(MGSC.MapCell). This is a modified copy a copy
         //  of the first loop in the  function.
         //Not doing an early return to keep the code similar to the source.
         //ItemOnFloor itemOnFloor = __instance._itemsOnFloor.Get(cursorCell.X, cursorCell.Y);
-        if (groupedCount.Count > 0)
+        if (floorItems.Count > 0)
         {
-            foreach (var item in groupedCount)
+            foreach (var item in floorItems)
             {
-                string countText = item.Count == 1 ? "" : $"{item.Count}x ";
-
-                string text = Localization.Get($"item.{item.Item.Id}.name").FirstLetterToUpperCase();
-                sb.Append($"{countText}{text}, ");
+                string countText = item.Count == 1 ? "" : $" x{item.Count}";
+                string text = item.Name;
+                sb.Append($"{text}{countText}, ");
             }
 
             TMPro.TextMeshProUGUI label = __instance._currentObjectLabel;
@@ -151,6 +152,16 @@ internal static class MinimapScreen_Update_Patch
     }
 
     /// <summary>
+    /// Gets the localization text for items.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    private static string GetItemName(string itemId)
+    {
+        return Localization.Get($"item.{itemId}.name").FirstLetterToUpperCase();
+    }
+
+    /// <summary>
     /// Returns all of the base items for a cell.
     /// All corpses, storages, and items on the floor.
     /// </summary>
@@ -158,7 +169,7 @@ internal static class MinimapScreen_Update_Patch
     /// <param name="cursorCell"></param>
     /// <param name="obstacles"></param>
     /// <returns></returns>
-    private static List<(BasePickupItem Item, int Count)> GetAllCellItems(MinimapScreen __instance, 
+    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, 
         CellPosition cursorCell)
     {
 
@@ -193,13 +204,17 @@ internal static class MinimapScreen_Update_Patch
 
         if (storageItems != null) items.AddRange(storageItems);
 
-        //Group by count
-        List<(BasePickupItem Item, int Count)> groupedCount = items
+        //---- Sort and return item and count.
+        List<FloorItem> groupedCount = items
             .GroupBy(x => x.Id)
-            .OrderBy(x => x.Count())     //Order by count so common items are last.
-            .ThenBy(x => x.Key)
-            .Select(x => (Item: x.First(), Count: x.Count()))
-            .ToList(); ;
+            .Select(x => new FloorItem(x.First(), GetItemName(x.Key), x.Sum(x => x.StackCount)))
+            .OrderByDescending(x => {
+                BasePickupItem item = x.Item;
+                float price = item.Record<ItemRecord>()?.Price ?? 0f;
+                return price * x.Count;       //The total value of all the items including stack.
+            })
+            .ThenBy(x => x.Name)
+            .ToList();
 
         return groupedCount;
     }

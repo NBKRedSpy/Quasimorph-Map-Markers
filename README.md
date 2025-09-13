@@ -55,6 +55,11 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
+
+## 1.3.0
+* Primary sort is now price.
+* The count per item includes the stack count.  Ex: '9mm x120' instead of '9mm x2'
+
 ## 1.2.1
 * Fixed the "not in minimap screen" mode did not place marker when storage was open.
 
