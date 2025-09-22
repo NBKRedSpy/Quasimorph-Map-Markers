@@ -56,6 +56,9 @@ Thanks!
 
 # Change Log
 
+## 1.4.0
+* 0.9.6 compatibility
+
 ## 1.3.0
 * Primary sort is now price.
 * The count per item includes the stack count.  Ex: '9mm x120' instead of '9mm x2'
