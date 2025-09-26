@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapMarkers", "MapMarkers.csproj", "{BC7CA7B1-97E8-4DC3-BB79-1D5102E0C42D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapMarkers_Bootstrap", "..\..\bootstrap\src\MapMarkers_Bootstrap.csproj", "{0D9C4D0B-4031-15C0-C411-9AEB151E744E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BC7CA7B1-97E8-4DC3-BB79-1D5102E0C42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC7CA7B1-97E8-4DC3-BB79-1D5102E0C42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC7CA7B1-97E8-4DC3-BB79-1D5102E0C42D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D9C4D0B-4031-15C0-C411-9AEB151E744E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D9C4D0B-4031-15C0-C411-9AEB151E744E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D9C4D0B-4031-15C0-C411-9AEB151E744E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D9C4D0B-4031-15C0-C411-9AEB151E744E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

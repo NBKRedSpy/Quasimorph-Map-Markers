@@ -1,22 +1,14 @@
 ﻿using HarmonyLib;
-using MGSC;
-using Newtonsoft.Json;
 using MapMarkers.Utility;
-using SimpleJSON;
+using MapMarkers_Bootstrap;
+using MGSC;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace MapMarkers
 {
-    public static class Plugin
+    public class Plugin : BootstrapMod
     {
 
 
@@ -40,7 +32,14 @@ namespace MapMarkers
 
         private static McmConfiguration McmConfiguration;
 
-        [Hook(ModHookType.AfterConfigsLoaded)]
+        public Plugin(HookEvents hookEvents, bool isBeta) : base(hookEvents, isBeta)
+        {
+            HookEvents.AfterConfigsLoaded += AfterConfig;
+
+        }
+
+
+        //[Hook(ModHookType.AfterConfigsLoaded)]
         public static void AfterConfig(IModContext context)
         {
             Directory.CreateDirectory(ConfigDirectories.ModPersistenceFolder);
