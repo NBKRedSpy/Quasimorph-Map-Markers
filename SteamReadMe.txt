@@ -5,6 +5,8 @@
 
 If using the opt in beta, use the [url=https://github.com/NBKRedSpy/Quasimorph-Map-Markers/blob/beta/README.md]beta docs[/url] instead.
 
+[h1]Description[/h1]
+
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
 
 To use:
@@ -119,6 +121,20 @@ Thanks!
 [/list]
 
 [h1]Change Log[/h1]
+
+[h2]1.5.0[/h2]
+[list]
+[*]For game version 0.9.7+ only.
+[*]Can now remove markers when not in the minimap.  Defaults to Shift+F2.
+[*]All keybinds can be set in the Mod Config menu.  The user no longer needs to edit the config.json directly.
+[*]Internal: Updated Json to MCM framework to latest iteration.
+[/list]
+
+[h2]1.4.0[/h2]
+[list]
+[*]For game version 0.9.6+ only.
+[*]0.9.6 compatibility
+[/list]
 
 [h2]1.3.0[/h2]
 [list]
