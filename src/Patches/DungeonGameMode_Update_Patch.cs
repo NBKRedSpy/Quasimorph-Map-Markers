@@ -37,8 +37,19 @@ internal static class DungeonGameMode_Update_Patch
 
                 CellPosition pos = __instance.Creatures.Player.CreatureData.Position;
 
+                //If removing
+                if (Input.GetKey(Plugin.Config.RemovePlayerLocationOnDungeonModifierKey))
+                {
+                    if (locations.CurrentDungeonLevelPois.Contains(pos))
+                    {
+                        locations.CurrentDungeonLevelPois.Remove(pos);
+                        locations.Save();
+                        //Make a sound to let the user know they pressed the correct key.
+                        Plugin.PlayClickSound();
+                    }
+                }
                 //Only add
-                if (!locations.CurrentDungeonLevelPois.Contains(pos))
+                else if(!locations.CurrentDungeonLevelPois.Contains(pos))
                 {
                     locations.CurrentDungeonLevelPois.Add(pos);
                     locations.Save();

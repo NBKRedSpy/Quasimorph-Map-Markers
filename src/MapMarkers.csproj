@@ -106,7 +106,7 @@
 		<ItemGroup>
 			<FilesToDelete Include="$(VersionWorkshopPath)/*" />
 			<Delete Files="@(FilesToDelete)" />
-			<BuildSource Include="$(TargetDir)/*.*" Exclude="$(TargetDir)/*bootstrap.*"  /> <!-- Exclude workaround for build ignorning private assets for Project References-->
+			<BuildSource Include="$(TargetDir)/*.*" Exclude="$(TargetDir)/*bootstrap.*" /> <!-- Exclude workaround for build ignorning private assets for Project References-->
 		</ItemGroup>
 		<Message Importance="high" Text="ProjectDir folder -&gt; $(ProjectDir)" />
 		<Message Importance="high" Text="Workshop folder: $(VersionWorkshopPath)" />

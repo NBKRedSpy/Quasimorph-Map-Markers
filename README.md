@@ -11,6 +11,7 @@ When in the Mini Map:
 
 When in inventory or when not in the minimap:
 * Press F2 to add a marker at the player's location.  Note that this *only* adds markers to prevent accidentally removing a marker.
+* Press Shift+F2 to remove the marker at the player's location.
 
 Hovering over a marker will show all the items at that location\*.
 
@@ -21,7 +22,7 @@ The settings can be configured.
 # Configuration
 
 ## MCM
-This mod supports the Mod Configuration Menu. Some values can be set in the Mods menu, while others can only be changed in the config file.
+This mod supports the Mod Configuration Menu and is the preferred method for changing settings.  Use the Mods button on the main menu.
 
 ## Config File
 The configuration file will be created on the first game run and can be found at `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\MapMarkers\config.json`.
@@ -32,13 +33,15 @@ The configuration file will be created on the first game run and can be found at
 |AddLocationKey|Right Click|The key or mouse button to add or remove a marker.|
 |AddPlayerLocationKey|F2|Adds or removes a marker the the player's current location.|
 |AddPlayerLocationOnDungeonKey|F2|Adds a marker to the player's current location not in the minimap.  This *only* adds|
+|RemovePlayerLocationOnDungeonModifierKey|Left Shift|Hold down this key and the 'Add Player Location' key to remove a marker at the player's location. Set to None to disable. Ex: Shift + F2|
 |MarkerColor|Red|The color of the markers.|
 |FontSize|5|The size of the text to use for the marker's content text.  Important!  See FontSize note below.|
 
 ### FontSize Note for MCM
-Only use the slider in the Mod Config Menu.  The number cannot be typed in currently.  Additionally, pressing backspace closes the mod settings UI, which causes the config UI to become confused.
+Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become corrupted and may not save correctly.
+Either use the slider or click on the number box and delete and re-type the value.
 
-The number does not have to be perfect, so 5.02 vs 5.0 makes no real difference.
+When using the slider, the number does not have to be perfect; there is no real difference between using 5.02 or 5.0.
 
 ## Key List
 The list of valid keyboard keys can be found  at the bottom of https://docs.unity3d.com/ScriptReference/KeyCode.html
@@ -56,7 +59,14 @@ Thanks!
 
 # Change Log
 
+## 1.5.0
+* For game version 0.9.7+ only.
+* Can now remove markers when not in the minimap.  Defaults to Shift+F2.
+* All keybinds can be set in the Mod Config menu.  The user no longer needs to edit the config.json directly.
+* Internal: Updated Json to MCM framework to latest iteration.
+
 ## 1.4.0
+* For game version 0.9.6+ only.
 * 0.9.6 compatibility
 
 ## 1.3.0

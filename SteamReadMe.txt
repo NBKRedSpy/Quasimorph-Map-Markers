@@ -14,6 +14,7 @@ When in the Mini Map:
 When in inventory or when not in the minimap:
 [list]
 [*]Press F2 to add a marker at the player's location.  Note that this [i]only[/i] adds markers to prevent accidentally removing a marker.
+[*]Press Shift+F2 to remove the marker at the player's location.
 [/list]
 
 Hovering over a marker will show all the items at that location*.
@@ -26,7 +27,7 @@ The settings can be configured.
 
 [h2]MCM[/h2]
 
-This mod supports the Mod Configuration Menu. Some values can be set in the Mods menu, while others can only be changed in the config file.
+This mod supports the Mod Configuration Menu and is the preferred method for changing settings.  Use the Mods button on the main menu.
 
 [h2]Config File[/h2]
 
@@ -73,6 +74,14 @@ The configuration file will be created on the first game run and can be found at
 [/td]
 [/tr]
 [tr]
+[td]RemovePlayerLocationOnDungeonModifierKey
+[/td]
+[td]Left Shift
+[/td]
+[td]Hold down this key and the 'Add Player Location' key to remove a marker at the player's location. Set to None to disable. Ex: Shift + F2
+[/td]
+[/tr]
+[tr]
 [td]MarkerColor
 [/td]
 [td]Red
@@ -92,9 +101,10 @@ The configuration file will be created on the first game run and can be found at
 
 [h3]FontSize Note for MCM[/h3]
 
-Only use the slider in the Mod Config Menu.  The number cannot be typed in currently.  Additionally, pressing backspace closes the mod settings UI, which causes the config UI to become confused.
+Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become corrupted and may not save correctly.
+Either use the slider or click on the number box and delete and re-type the value.
 
-The number does not have to be perfect, so 5.02 vs 5.0 makes no real difference.
+When using the slider, the number does not have to be perfect; there is no real difference between using 5.02 or 5.0.
 
 [h2]Key List[/h2]
 
@@ -115,6 +125,20 @@ Thanks!
 [/list]
 
 [h1]Change Log[/h1]
+
+[h2]1.5.0[/h2]
+[list]
+[*]For game version 0.9.7+ only.
+[*]Can now remove markers when not in the minimap.  Defaults to Shift+F2.
+[*]All keybinds can be set in the Mod Config menu.  The user no longer needs to edit the config.json directly.
+[*]Internal: Updated Json to MCM framework to latest iteration.
+[/list]
+
+[h2]1.4.0[/h2]
+[list]
+[*]For game version 0.9.6+ only.
+[*]0.9.6 compatibility
+[/list]
 
 [h2]1.3.0[/h2]
 [list]

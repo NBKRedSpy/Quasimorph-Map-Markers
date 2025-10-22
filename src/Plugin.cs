@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MapMarkers.MCM;
 using MapMarkers.Utility;
 using MapMarkers_Bootstrap;
 using MGSC;
@@ -57,7 +58,7 @@ namespace MapMarkers
 
             Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath, Logger);
 
-            McmConfiguration = new McmConfiguration(Config, Logger);
+            McmConfiguration = new McmConfiguration(Config);
             McmConfiguration.TryConfigure();
             new Harmony("NBKRedSpy_" + ConfigDirectories.ModAssemblyName).PatchAll();
         }

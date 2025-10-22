@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
-using MapMarkers.Utility.Mcm;
+using MapMarkers.Mcm;
 
 namespace MapMarkers.Utility;
 
-public abstract class  PersistentConfig<T> where T : PersistentConfig<T>, new()
+public abstract class  PersistentConfig<T> where T : PersistentConfig<T>, ISave, new()
 {
     [JsonIgnore]
     protected string ConfigPath { get; set; }
