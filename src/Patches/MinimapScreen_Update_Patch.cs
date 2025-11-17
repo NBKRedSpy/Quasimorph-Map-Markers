@@ -17,7 +17,7 @@ namespace MapMarkers.Patches;
 /// <summary>
 /// Handles adding and removing locations on the minimap screen
 /// </summary>
-[HarmonyPatch(typeof(MinimapScreen), nameof(MinimapScreen.Update))]
+[HarmonyPatch(typeof(MinimapScreen), nameof(MinimapScreen.LateUpdate))]
 internal static partial class MinimapScreen_Update_Patch
 {
 

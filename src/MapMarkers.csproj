@@ -4,6 +4,8 @@
 		<TargetFramework>net48</TargetFramework>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<!--<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>-->
+		<AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
 	</PropertyGroup>
 	<PropertyGroup>
 		<!-- Set this value to your mod's Steam Workhop ID -->
@@ -23,12 +25,13 @@
 		<MCM_PATH>$(GAME_PATH)\..\..\workshop\content\2059170\3469678797\MCM.dll</MCM_PATH>
 	</PropertyGroup>
 
+
 	<PropertyGroup>
 		<!-- Comment this first line out to use the actual version.-->
 		<Assembly-CSharpPath Condition="Exists('lib-stripped\Assembly-CSharp-publicized.dll')">lib-stripped/Assembly-CSharp-publicized.dll</Assembly-CSharpPath>
 		<Assembly-CSharpPath Condition="!Exists('lib-stripped\Assembly-CSharp-publicized.dll')">$(ManagedPath)Assembly-CSharp.dll</Assembly-CSharpPath>
 	</PropertyGroup>
-
+	
 	<ItemGroup>
 		<Reference Update="System">
 			<Private>False</Private>
@@ -42,6 +45,10 @@
 			<HintPath>$(Assembly-CSharpPath)</HintPath>
 			<Private>False</Private>
 		</Reference>
+		<Reference Include="SimpleJSON">
+		  <HintPath>$(ManagedPath)SimpleJSON.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
 		<Reference Include="Unity.TextMeshPro">
 			<HintPath>$(ManagedPath)Unity.TextMeshPro.dll</HintPath>
 			<Private>False</Private>
@@ -52,7 +59,7 @@
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="UnityEngine.AudioModule">
-			<HintPath>$(ManagedPath)UnityEngine.AudioModule.dll</HintPath>
+		  <HintPath>$(ManagedPath)UnityEngine.AudioModule.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="UnityEngine.UI, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -81,9 +88,12 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\bootstrap\src\MapMarkers_Bootstrap.csproj">
 	    <Private>False</Private>
+	    <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+	    <ReferenceOutputAssembly>True</ReferenceOutputAssembly>
 	  </ProjectReference>
 	</ItemGroup>
 
+	
 	<Target Name="NoSteamIdMessage" Condition="'$(SteamId)'==''" AfterTargets="PostBuildEvent">
 		<Message Importance="high" Text="The SteamId is not set in the project.  Aborting Steam Workshop folder deployment." />
 	</Target>
@@ -96,11 +106,14 @@
 		<ItemGroup>
 			<FilesToDelete Include="$(VersionWorkshopPath)/*" />
 			<Delete Files="@(FilesToDelete)" />
-			<BuildSource Include="$(TargetDir)/*.*" Exclude="$(TargetDir)/*bootstrap.*"  /> <!-- Exclude workaround for build ignorning private assets for Project References-->
+			<BuildSource Include="$(TargetDir)/*.*" Exclude="$(TargetDir)/*bootstrap.*" /> <!-- Exclude workaround for build ignorning private assets for Project References-->
 		</ItemGroup>
 		<Message Importance="high" Text="ProjectDir folder -&gt; $(ProjectDir)" />
 		<Message Importance="high" Text="Workshop folder: $(VersionWorkshopPath)" />
 		<MakeDir Directories="$(VersionWorkshopPath)" ContinueOnError="true" />
+		
 		<Copy SourceFiles="@(BuildSource)" DestinationFolder="$(VersionWorkshopPath)" />
+		<Delete Files="$(VersionWorkshopPath)/*bootstrap.dll" />
+
 	</Target>
 </Project>

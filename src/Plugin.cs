@@ -1,9 +1,20 @@
 ﻿using HarmonyLib;
+using MapMarkers.MCM;
 using MapMarkers.Utility;
 using MapMarkers_Bootstrap;
 using MGSC;
+using Newtonsoft.Json;
+using SimpleJSON;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Contexts;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace MapMarkers
@@ -32,12 +43,12 @@ namespace MapMarkers
 
         private static McmConfiguration McmConfiguration;
 
+
         public Plugin(HookEvents hookEvents, bool isBeta) : base(hookEvents, isBeta)
         {
             HookEvents.AfterConfigsLoaded += AfterConfig;
 
         }
-
 
         //[Hook(ModHookType.AfterConfigsLoaded)]
         public static void AfterConfig(IModContext context)
@@ -47,10 +58,8 @@ namespace MapMarkers
 
             Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath, Logger);
 
-            McmConfiguration = new McmConfiguration(Config, Logger);
+            McmConfiguration = new McmConfiguration(Config);
             McmConfiguration.TryConfigure();
-
-
             new Harmony("NBKRedSpy_" + ConfigDirectories.ModAssemblyName).PatchAll();
         }
 

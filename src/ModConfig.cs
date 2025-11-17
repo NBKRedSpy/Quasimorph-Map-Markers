@@ -1,14 +1,12 @@
-﻿using MapMarkers.Utility;
-using MapMarkers.Utility.Mcm;
+﻿using MapMarkers.Mcm;
+using MapMarkers.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.IO;
 using UnityEngine;
 
 
 namespace MapMarkers;
-public class ModConfig : PersistentConfig<ModConfig>, IMcmConfigTarget
+public class ModConfig : PersistentConfig<ModConfig>, ISave
 {
 
     /// <summary>
@@ -18,25 +16,30 @@ public class ModConfig : PersistentConfig<ModConfig>, IMcmConfigTarget
     public KeyCode ClearLocationsKey { get; set; } = KeyCode.Delete;
 
     /// <summary>
-    /// Adds a marker under the cursor.
+    /// MiniMap: Adds a marker under the cursor.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public KeyCode AddLocationKey { get; set; } = KeyCode.Mouse1;
 
     /// <summary>
-    /// Adds a location under the player's current location
+    /// MiniMap: Adds a location under the player's current location
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public KeyCode AddPlayerLocationKey { get; set; } = KeyCode.F2;
 
     /// <summary>
-    /// Adds a marker at the current location when not in the mini map.
+    /// Dungeon: Adds a marker at the current location when not in the mini map.
     /// Note - This does not toggle; it only adds.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public KeyCode AddPlayerLocationOnDungeonKey { get; set; } = KeyCode.F2;
 
 
+    /// <summary>
+    /// Dungeon: Hold down this key and the AddPlayerLocationOnDungeonKey.
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public KeyCode RemovePlayerLocationOnDungeonModifierKey { get; set; } = KeyCode.LeftShift;
 
     /// <summary>
     /// The font size to use for the marker's content text.
@@ -46,9 +49,9 @@ public class ModConfig : PersistentConfig<ModConfig>, IMcmConfigTarget
     /// <summary>
     /// The color of the minimap point of interest indicator.
     /// </summary>
-    public Color32 MarkerColor { get; set; } = new Color32(255,0,0,255);
+    public Color32 MarkerColor { get; set; } = new Color32(255, 0, 0, 255);
 
-    
+
     /// <summary>
     /// The Color that is compatible with the MCM
     /// </summary>
@@ -59,7 +62,7 @@ public class ModConfig : PersistentConfig<ModConfig>, IMcmConfigTarget
         set => MarkerColor = (Color32)value;
     }
 
-    public ModConfig() 
+    public ModConfig()
     {
     }
 
