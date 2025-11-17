@@ -1,10 +1,6 @@
 # Quasimorph Map Markers
 ![marker example](media/Marker%20Example.png)
 
-
-# Beta Note
-If using the opt in beta, use the [beta docs](https://github.com/NBKRedSpy/Quasimorph-Map-Markers/blob/beta/README.md) instead.
-
 # Description
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
 
