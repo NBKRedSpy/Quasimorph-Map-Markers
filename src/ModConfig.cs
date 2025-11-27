@@ -4,11 +4,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
 
-
 namespace MapMarkers;
+
 public class ModConfig : PersistentConfig<ModConfig>, ISave
 {
-
     /// <summary>
     /// Clears all locations for the current level.
     /// </summary>
@@ -28,15 +27,25 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     public KeyCode AddPlayerLocationKey { get; set; } = KeyCode.F2;
 
     /// <summary>
-    /// Dungeon: Adds a marker at the current location when not in the mini map.
-    /// Note - This does not toggle; it only adds.
+    /// Marker 1 Key - Adds/removes a marker with Color 1 at the player's location.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public KeyCode AddPlayerLocationOnDungeonKey { get; set; } = KeyCode.F2;
-
+    public KeyCode Marker1Key { get; set; } = KeyCode.F1;
 
     /// <summary>
-    /// Dungeon: Hold down this key and the AddPlayerLocationOnDungeonKey.
+    /// Marker 2 Key - Adds/removes a marker with Color 2 at the player's location.
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public KeyCode Marker2Key { get; set; } = KeyCode.F2;
+
+    /// <summary>
+    /// Marker 3 Key - Adds/removes a marker with Color 3 at the player's location.
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public KeyCode Marker3Key { get; set; } = KeyCode.F3;
+
+    /// <summary>
+    /// Dungeon: Hold down this key with any marker key to remove that marker.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public KeyCode RemovePlayerLocationOnDungeonModifierKey { get; set; } = KeyCode.LeftShift;
@@ -47,28 +56,55 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     public float FontSize { get; set; } = 5f;
 
     /// <summary>
-    /// The color of the minimap point of interest indicator.
+    /// The color for Marker 1.
     /// </summary>
-    public Color32 MarkerColor { get; set; } = new Color32(255, 0, 0, 255);
-
+    public Color32 Marker1Color { get; set; } = new Color32(255, 0, 0, 255); // Red
 
     /// <summary>
-    /// The Color that is compatible with the MCM
+    /// The color for Marker 2.
+    /// </summary>
+    public Color32 Marker2Color { get; set; } = new Color32(0, 0, 255, 255); // Blue
+
+    /// <summary>
+    /// The color for Marker 3.
+    /// </summary>
+    public Color32 Marker3Color { get; set; } = new Color32(0, 255, 0, 255); // Green
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for Marker 1
     /// </summary>
     [JsonIgnore]
-    public Color MarkerColorTransform
+    public Color Marker1ColorTransform
     {
-        get => (Color)MarkerColor;
-        set => MarkerColor = (Color32)value;
+        get => (Color)Marker1Color;
+        set => Marker1Color = (Color32)value;
+    }
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for Marker 2
+    /// </summary>
+    [JsonIgnore]
+    public Color Marker2ColorTransform
+    {
+        get => (Color)Marker2Color;
+        set => Marker2Color = (Color32)value;
+    }
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for Marker 3
+    /// </summary>
+    [JsonIgnore]
+    public Color Marker3ColorTransform
+    {
+        get => (Color)Marker3Color;
+        set => Marker3Color = (Color32)value;
     }
 
     public ModConfig()
     {
     }
 
-
     public ModConfig(string configPath, Utility.Logger logger) : base(configPath, logger)
     {
     }
-
 }

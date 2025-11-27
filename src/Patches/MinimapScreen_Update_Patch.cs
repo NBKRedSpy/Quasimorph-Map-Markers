@@ -1,18 +1,12 @@
-﻿using AsmResolver.PE.DotNet.ReadyToRun;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MGSC;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 
 namespace MapMarkers.Patches;
-
 
 /// <summary>
 /// Handles adding and removing locations on the minimap screen
@@ -20,15 +14,12 @@ namespace MapMarkers.Patches;
 [HarmonyPatch(typeof(MinimapScreen), nameof(MinimapScreen.LateUpdate))]
 internal static partial class MinimapScreen_Update_Patch
 {
-
     public static void Postfix(MinimapScreen __instance)
     {
         try
         {
-
-
-            //Right click to add item.
-            if(Input.GetKeyDown(Plugin.Config.AddLocationKey))
+            // Right click to add item.
+            if (Input.GetKeyDown(Plugin.Config.AddLocationKey))
             {
                 PoiLocations locations = Plugin.CurrentSavePoiStorage;
 
@@ -40,24 +31,23 @@ internal static partial class MinimapScreen_Update_Patch
 
                 CellPosition cursorCell = GetCellUnderCursor(__instance);
 
-                //Out of bounds.
+                // Out of bounds check
                 if ((cursorCell.X < 0 || cursorCell.Y > 0 || cursorCell.X < __instance._mapGrid.MaxWidth 
                     || cursorCell.Y < __instance._mapGrid.MaxHeight))
                 {
-                    if (locations.CurrentDungeonLevelPois.Contains(cursorCell))
+                    if (locations.HasMarkerAt(cursorCell))
                     {
-                        locations.CurrentDungeonLevelPois.Remove(cursorCell);
+                        locations.RemoveMarker(cursorCell);
                     }
                     else
                     {
-                        locations.CurrentDungeonLevelPois.Add(cursorCell);
+                        // Use Marker 1 color by default for cursor-based placement
+                        locations.AddOrUpdateMarker(cursorCell, Plugin.Config.Marker1Color);
                     }
 
                     locations.Save();
-
                     RefreshMap(__instance);
                     Plugin.PlayClickSound();
-
                 }
             }
 
@@ -71,7 +61,7 @@ internal static partial class MinimapScreen_Update_Patch
                 RefreshMap(__instance);
             }
 
-            //Player's current location
+            // Player's current location
             if (Input.GetKeyDown(Plugin.Config.AddPlayerLocationKey))
             {
                 PoiLocations locations = Plugin.CurrentSavePoiStorage;
@@ -82,19 +72,19 @@ internal static partial class MinimapScreen_Update_Patch
                 }
 
                 CellPosition pos = __instance._creatures.Player.CreatureData.Position;
-                if (locations.CurrentDungeonLevelPois.Contains(pos))
+                
+                if (locations.HasMarkerAt(pos))
                 {
-                    locations.CurrentDungeonLevelPois.Remove(pos);
+                    locations.RemoveMarker(pos);
                 }
                 else
                 {
-                    locations.CurrentDungeonLevelPois.Add(pos);
+                    // Use Marker 1 color by default for player location toggle
+                    locations.AddOrUpdateMarker(pos, Plugin.Config.Marker1Color);
                 }
 
                 Plugin.PlayClickSound();
-
                 locations.Save();
-
                 RefreshMap(__instance);
             }
 
@@ -117,23 +107,20 @@ internal static partial class MinimapScreen_Update_Patch
 
     public static void ShowMarkerItems(MinimapScreen __instance, MapGrid mapGrid)
     {
-
         CellPosition cursorCell = GetCellUnderCursor(__instance);
 
-        //Only run if there is a marker on the floor.
-        if (!Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x, cursorCell))) return;
+        // Only run if there is a marker on the floor.
+        if (!Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell))) return;
 
         StringBuilder sb = new StringBuilder();
         
         List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell);
 
-        //COPY WARNING:  MGSC.MinimapScreen.RefreshLabelUnderCursor(MGSC.MapCell). This is a modified copy a copy
-        //  of the first loop in the  function.
-        //Not doing an early return to keep the code similar to the source.
-        //ItemOnFloor itemOnFloor = __instance._itemsOnFloor.Get(cursorCell.X, cursorCell.Y);
+        // COPY WARNING:  MGSC.MinimapScreen.RefreshLabelUnderCursor(MGSC.MapCell). This is a modified copy
+        // of the first loop in the function.
         if (floorItems.Count > 0)
         {
-            foreach (var item in floorItems)
+            foreach (FloorItem item in floorItems)
             {
                 string countText = item.Count == 1 ? "" : $" x{item.Count}";
                 string text = item.Name;
@@ -154,7 +141,7 @@ internal static partial class MinimapScreen_Update_Patch
     /// <summary>
     /// Gets the localization text for items.
     /// </summary>
-    /// <param name="item"></param>
+    /// <param name="itemId"></param>
     /// <returns></returns>
     private static string GetItemName(string itemId)
     {
@@ -167,20 +154,16 @@ internal static partial class MinimapScreen_Update_Patch
     /// </summary>
     /// <param name="__instance"></param>
     /// <param name="cursorCell"></param>
-    /// <param name="obstacles"></param>
     /// <returns></returns>
-    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, 
-        CellPosition cursorCell)
+    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, CellPosition cursorCell)
     {
-
         List<MapObstacle> obstacles = __instance._mapObstacles.GetAll(cursorCell.X, cursorCell.Y, false, false);
 
-        List<BasePickupItem> items;
-        items = new List<BasePickupItem>();
+        List<BasePickupItem> items = new List<BasePickupItem>();
 
         IEnumerable<BasePickupItem> storageItems;
 
-        //Corpses
+        // Corpses
         storageItems = obstacles
             .Where(x => x.CorpseStorage != null)
             .SelectMany(x =>
@@ -189,7 +172,7 @@ internal static partial class MinimapScreen_Update_Patch
 
         if (storageItems != null) items.AddRange(storageItems);
 
-        //Item storage.  May be multiple
+        // Item storage.  May be multiple
         storageItems = obstacles.SelectMany(x =>
             x.Components
                 .Where(x => x is Store)
@@ -198,20 +181,20 @@ internal static partial class MinimapScreen_Update_Patch
 
         if (storageItems != null) items.AddRange(storageItems);
 
-        //check for floor items
+        // check for floor items
         storageItems = __instance._itemsOnFloor.Get(cursorCell.X, cursorCell.Y)
             ?.Storage.Items;
 
         if (storageItems != null) items.AddRange(storageItems);
 
-        //---- Sort and return item and count.
+        // Sort and return item and count.
         List<FloorItem> groupedCount = items
             .GroupBy(x => x.Id)
             .Select(x => new FloorItem(x.First(), GetItemName(x.Key), x.Sum(x => x.StackCount)))
             .OrderByDescending(x => {
                 BasePickupItem item = x.Item;
                 float price = item.Record<ItemRecord>()?.Price ?? 0f;
-                return price * x.Count;       //The total value of all the items including stack.
+                return price * x.Count;       // The total value of all the items including stack.
             })
             .ThenBy(x => x.Name)
             .ToList();

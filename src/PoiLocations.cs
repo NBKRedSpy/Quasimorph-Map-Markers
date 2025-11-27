@@ -4,10 +4,12 @@ using MapMarkers.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Logger = MapMarkers.Utility.Logger;
+using UnityEngine;
 
 namespace MapMarkers
 {
-
     /// <summary>
     /// The POI coordinates for a floor.
     /// </summary>
@@ -28,22 +30,21 @@ namespace MapMarkers
         private string FilePath { get; set; }
 
         /// <summary>
-        /// The list of POI locations per dungeon level
+        /// The list of markers per dungeon level
         /// </summary>
-        public Dictionary<string, List<CellPosition>> Locations { get; set; } = [];
+        public Dictionary<string, List<MarkerData>> Locations { get; set; } = new Dictionary<string, List<MarkerData>>();
 
         [JsonIgnore]
         /// <summary>
-        /// The current dungeon level cache.  Each level has its own POI list.
+        /// The current dungeon level cache.  Each level has its own marker list.
         /// </summary>
         public string CurrentDungeonLevelId { get; set; } = "";
 
-
         /// <summary>
-        /// Cache for the POI locations on the current dungeon level.
+        /// Cache for the markers on the current dungeon level.
         /// </summary>
         [JsonIgnore]
-        public List<CellPosition> CurrentDungeonLevelPois{ get; set; }
+        public List<MarkerData> CurrentDungeonLevelPois { get; set; }
 
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings()
         {
@@ -55,34 +56,76 @@ namespace MapMarkers
         /// </summary>
         public PoiLocations()
         {
-                
         }
 
         public PoiLocations(string persistencePath, int saveSlotNumber, Logger logger)
         {
-            //Call the base with a blank value.  Init will set the full path to the config file.
             Init(persistencePath, logger, saveSlotNumber);
         }
 
         /// <summary>
-        /// Sets the current Dungeon Level.  Creates or loads the POI locations for the level.
+        /// Sets the current Dungeon Level.  Creates or loads the markers for the level.
         /// </summary>
         /// <param name="locationUniqueId"></param>
         public void SetDungeonLevel(string locationUniqueId)
         {
-            List<CellPosition> cellPositions = null;
+            List<MarkerData> markers = null;
 
-            if (Locations.TryGetValue(locationUniqueId, out cellPositions))
+            if (Locations.TryGetValue(locationUniqueId, out markers))
             {
-                CurrentDungeonLevelPois = cellPositions;
+                CurrentDungeonLevelPois = markers;
             }
             else
             {
-                CurrentDungeonLevelPois = new List<CellPosition>();
+                CurrentDungeonLevelPois = new List<MarkerData>();
                 Locations[locationUniqueId] = CurrentDungeonLevelPois;
             }
 
             CurrentDungeonLevelId = locationUniqueId;
+        }
+
+        /// <summary>
+        /// Adds or updates a marker at the specified position with the given color.
+        /// </summary>
+        public void AddOrUpdateMarker(CellPosition position, Color32 color)
+        {
+            MarkerData existingMarker = CurrentDungeonLevelPois.FirstOrDefault(m => 
+                m.Position.X == position.X && m.Position.Y == position.Y);
+
+            if (existingMarker != null)
+            {
+                existingMarker.Color = color;
+            }
+            else
+            {
+                CurrentDungeonLevelPois.Add(new MarkerData(position, color));
+            }
+        }
+
+        /// <summary>
+        /// Removes a marker at the specified position.
+        /// </summary>
+        public bool RemoveMarker(CellPosition position)
+        {
+            MarkerData existingMarker = CurrentDungeonLevelPois.FirstOrDefault(m => 
+                m.Position.X == position.X && m.Position.Y == position.Y);
+
+            if (existingMarker != null)
+            {
+                CurrentDungeonLevelPois.Remove(existingMarker);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if a marker exists at the specified position.
+        /// </summary>
+        public bool HasMarkerAt(CellPosition position)
+        {
+            return CurrentDungeonLevelPois.Any(m => 
+                m.Position.X == position.X && m.Position.Y == position.Y);
         }
 
         /// <summary>
@@ -93,7 +136,7 @@ namespace MapMarkers
         {
             Logger = logger;
             SaveSlotNumber = slotNumber;
-            FilePath  = GetFilePath(persistenceDir, slotNumber);
+            FilePath = GetFilePath(persistenceDir, slotNumber);
         }
 
         private static string GetFilePath(string persistenceDir, int slotNumber)
@@ -101,10 +144,9 @@ namespace MapMarkers
             return Path.Combine(persistenceDir, $"PoI_Slot_{slotNumber}.json");
         }
 
-
         public void Save()
         {
-            if(string.IsNullOrEmpty(this.FilePath))
+            if (string.IsNullOrEmpty(this.FilePath))
             {
                 throw new ArgumentException("The File path to the POI Locations must be set");
             }
@@ -119,7 +161,6 @@ namespace MapMarkers
                 Logger.LogError(ex);
             }
         }
-
 
         /// <summary>
         /// Returns the existing save for the slot number, or will create and save a new one.
@@ -138,7 +179,7 @@ namespace MapMarkers
                 return location;
             }
 
-            string json = File.ReadAllText(location.FilePath);  
+            string json = File.ReadAllText(location.FilePath);
             location = JsonConvert.DeserializeObject<PoiLocations>(json, SerializerSettings);
             location.Init(persistencePath, logger, saveSlotNumber);
 
@@ -152,7 +193,7 @@ namespace MapMarkers
                 File.Delete(this.FilePath);
             }
 
-            Locations = new Dictionary<string, List<CellPosition>>();
+            Locations = new Dictionary<string, List<MarkerData>>();
             CurrentDungeonLevelPois = null;
             CurrentDungeonLevelId = "";
         }
@@ -165,7 +206,5 @@ namespace MapMarkers
                 File.Delete(fileName);
             }
         }
-
-
     }
 }
