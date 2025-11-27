@@ -30,17 +30,17 @@ namespace MapMarkers.MCM
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.Marker1Key),
                     @"Key to add/remove a Marker 1 at the player's location", "Marker 1 Key", "Markers"),
                 CreateConfigProperty(nameof(ModConfig.Marker1ColorTransform),
-                    @"The color of Marker 1 on the minimap", "Marker 1 Color", "Markers"),
+                    @"The color of Marker 1", "Marker 1 Color", "Markers"),
 
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.Marker2Key),
                     @"Key to add/remove a Marker 2 at the player's location", "Marker 2 Key", "Markers"),
                 CreateConfigProperty(nameof(ModConfig.Marker2ColorTransform),
-                    @"The color of Marker 2 on the minimap", "Marker 2 Color", "Markers"),
+                    @"The color of Marker 2", "Marker 2 Color", "Markers"),
 
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.Marker3Key),
                     @"Key to add/remove a Marker 3 at the player's location", "Marker 3 Key", "Markers"),
                 CreateConfigProperty(nameof(ModConfig.Marker3ColorTransform),
-                    @"The color of Marker 3 on the minimap", "Marker 3 Color", "Markers"),
+                    @"The color of Marker 3", "Marker 3 Color", "Markers"),
 
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.RemovePlayerLocationOnDungeonModifierKey),
                     @"Hold down this key and any marker key to remove a marker at the player's location.\nSet to None to disable. Ex: Shift + F1", "Remove Marker Modifier Key", "Markers")
