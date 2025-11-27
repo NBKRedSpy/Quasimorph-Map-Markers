@@ -30,19 +30,35 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// Marker 1 Key - Adds/removes a marker with Color 1 at the player's location.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public KeyCode Marker1Key { get; set; } = KeyCode.F1;
+    public KeyCode Marker1Key { get; set; } = KeyCode.F2;
+
+    /// <summary>
+    /// The color for Marker 1.
+    /// </summary>
+    public Color32 Marker1Color { get; set; } = new Color32(255, 0, 0, 255); // Red
 
     /// <summary>
     /// Marker 2 Key - Adds/removes a marker with Color 2 at the player's location.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public KeyCode Marker2Key { get; set; } = KeyCode.F2;
+    public KeyCode Marker2Key { get; set; } = KeyCode.F3;
+
+    /// <summary>
+    /// The color for Marker 2.
+    /// </summary>
+    public Color32 Marker2Color { get; set; } = new Color32(0, 0, 255, 255); // Blue
 
     /// <summary>
     /// Marker 3 Key - Adds/removes a marker with Color 3 at the player's location.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public KeyCode Marker3Key { get; set; } = KeyCode.F3;
+    public KeyCode Marker3Key { get; set; } = KeyCode.F4;
+
+
+    /// <summary>
+    /// The color for Marker 3.
+    /// </summary>
+    public Color32 Marker3Color { get; set; } = new Color32(0, 255, 0, 255); // Green
 
     /// <summary>
     /// Dungeon: Hold down this key with any marker key to remove that marker.
@@ -54,21 +70,6 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// The font size to use for the marker's content text.
     /// </summary>
     public float FontSize { get; set; } = 5f;
-
-    /// <summary>
-    /// The color for Marker 1.
-    /// </summary>
-    public Color32 Marker1Color { get; set; } = new Color32(255, 0, 0, 255); // Red
-
-    /// <summary>
-    /// The color for Marker 2.
-    /// </summary>
-    public Color32 Marker2Color { get; set; } = new Color32(0, 0, 255, 255); // Blue
-
-    /// <summary>
-    /// The color for Marker 3.
-    /// </summary>
-    public Color32 Marker3Color { get; set; } = new Color32(0, 255, 0, 255); // Green
 
     /// <summary>
     /// The Color that is compatible with the MCM for Marker 1
