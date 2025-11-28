@@ -35,7 +35,7 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// <summary>
     /// The color for Marker 1.
     /// </summary>
-    public Color32 Marker1Color { get; set; } = new Color32(255, 0, 0, 255); // Red
+    public Color32 Marker1Color { get; set; } = Color.red;
 
     /// <summary>
     /// Marker 2 Key - Adds/removes a marker with Color 2 at the player's location.
@@ -46,7 +46,7 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// <summary>
     /// The color for Marker 2.
     /// </summary>
-    public Color32 Marker2Color { get; set; } = new Color32(0, 0, 255, 255); // Blue
+    public Color32 Marker2Color { get; set; } = Color.green;
 
     /// <summary>
     /// Marker 3 Key - Adds/removes a marker with Color 3 at the player's location.
@@ -58,7 +58,7 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// <summary>
     /// The color for Marker 3.
     /// </summary>
-    public Color32 Marker3Color { get; set; } = new Color32(0, 255, 0, 255); // Green
+    public Color32 Marker3Color { get; set; } = Color.yellow;
 
     /// <summary>
     /// Dungeon: Hold down this key with any marker key to remove that marker.
