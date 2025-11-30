@@ -3,43 +3,35 @@
 
 # Description
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
+Support multiple marker colors to prioritize locations. \*\*
 
 To use: 
 
 When in the Mini Map:
 * Right click to add or remove a location under the cursor.
-* Press F2 to add or remove a marker at the player's location
+* Press F2 to add or remove a marker at the player's location. \*\*
+
 
 When in inventory or when not in the minimap:
-* Press F2 to add a marker at the player's location.  Note that this *only* adds markers to prevent accidentally removing a marker.
+* Press F2,F3, or F4 to add a marker at the player's location.  Each key is a different number.  Note that this *only* adds markers to prevent accidentally removing a marker.
 * Press Shift+F2 to remove the marker at the player's location.
 
 Hovering over a marker will show all the items at that location\*.
 
 The settings can be configured.
 
-\* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
+\* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)  
+\*\* Currently the mod supports different marker colors, but cannot be added using the mouse on the minimap. This may or may not be changed in the future.
 
 # Configuration
-
 ## MCM
 This mod supports the Mod Configuration Menu and is the preferred method for changing settings.  Use the Mods button on the main menu.
 
 ## Config File
 The configuration file will be created on the first game run and can be found at `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\MapMarkers\config.json`.
 
-|Name|Default|Description|
-|--|--|--|
-|ClearLocationsKey|Delete|Deletes all of the map markers for the current level.|
-|AddLocationKey|Right Click|The key or mouse button to add or remove a marker.|
-|AddPlayerLocationKey|F2|Adds or removes a marker the the player's current location.|
-|AddPlayerLocationOnDungeonKey|F2|Adds a marker to the player's current location not in the minimap.  This *only* adds|
-|RemovePlayerLocationOnDungeonModifierKey|Left Shift|Hold down this key and the 'Add Player Location' key to remove a marker at the player's location. Set to None to disable. Ex: Shift + F2|
-|MarkerColor|Red|The color of the markers.|
-|FontSize|5|The size of the text to use for the marker's content text.  Important!  See FontSize note below.|
-
 ### FontSize Note for MCM
-Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become corrupted and may not save correctly.
+Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become confused and not save the change.
 Either use the slider or click on the number box and delete and re-type the value.
 
 When using the slider, the number does not have to be perfect; there is no real difference between using 5.02 or 5.0.
@@ -59,6 +51,8 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
+## 1.6.0
+* Added additional colors
 
 ## 1.5.0
 * For game version 0.9.7+ only.
@@ -70,20 +64,8 @@ Thanks!
 * For game version 0.9.6+ only.
 * 0.9.6 compatibility
 
-## 1.3.0
-* Primary sort is now price.
-* The count per item includes the stack count.  Ex: '9mm x120' instead of '9mm x2'
-
-## 1.2.1
-* Fixed the "not in minimap screen" mode did not place marker when storage was open.
-
-## 1.2.0
-* Added hotkey to add a marker when in inventory and not the mini map.
-* Added game's "Click" sounds to the actions.
-* Changed defaults of "Add Marker" to F2
-
-## 1.1.0
-* Added listing the items at a marker when hovered.
+## More Changes
+* See the github link for older changes.
 
 # Credits
 * Special thanks to Crynano for his excellent Mod Configuration Menu. 

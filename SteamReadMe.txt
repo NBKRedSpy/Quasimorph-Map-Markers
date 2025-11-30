@@ -4,18 +4,19 @@
 [h1]Description[/h1]
 
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
+Support multiple marker colors to prioritize locations. **
 
 To use:
 
 When in the Mini Map:
 [list]
 [*]Right click to add or remove a location under the cursor.
-[*]Press F2 to add or remove a marker at the player's location
+[*]Press F2 to add or remove a marker at the player's location. **
 [/list]
 
 When in inventory or when not in the minimap:
 [list]
-[*]Press F2 to add a marker at the player's location.  Note that this [i]only[/i] adds markers to prevent accidentally removing a marker.
+[*]Press F2,F3, or F4 to add a marker at the player's location.  Each key is a different number.  Note that this [i]only[/i] adds markers to prevent accidentally removing a marker.
 [*]Press Shift+F2 to remove the marker at the player's location.
 [/list]
 
@@ -24,6 +25,7 @@ Hovering over a marker will show all the items at that location*.
 The settings can be configured.
 
 * The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
+** Currently the mod supports different marker colors, but cannot be added using the mouse on the minimap. This may or may not be changed in the future.
 
 [h1]Configuration[/h1]
 
@@ -34,76 +36,10 @@ This mod supports the Mod Configuration Menu and is the preferred method for cha
 [h2]Config File[/h2]
 
 The configuration file will be created on the first game run and can be found at [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\MapMarkers\config.json[/i].
-[table]
-[tr]
-[td]Name
-[/td]
-[td]Default
-[/td]
-[td]Description
-[/td]
-[/tr]
-[tr]
-[td]ClearLocationsKey
-[/td]
-[td]Delete
-[/td]
-[td]Deletes all of the map markers for the current level.
-[/td]
-[/tr]
-[tr]
-[td]AddLocationKey
-[/td]
-[td]Right Click
-[/td]
-[td]The key or mouse button to add or remove a marker.
-[/td]
-[/tr]
-[tr]
-[td]AddPlayerLocationKey
-[/td]
-[td]F2
-[/td]
-[td]Adds or removes a marker the the player's current location.
-[/td]
-[/tr]
-[tr]
-[td]AddPlayerLocationOnDungeonKey
-[/td]
-[td]F2
-[/td]
-[td]Adds a marker to the player's current location not in the minimap.  This [i]only[/i] adds
-[/td]
-[/tr]
-[tr]
-[td]RemovePlayerLocationOnDungeonModifierKey
-[/td]
-[td]Left Shift
-[/td]
-[td]Hold down this key and the 'Add Player Location' key to remove a marker at the player's location. Set to None to disable. Ex: Shift + F2
-[/td]
-[/tr]
-[tr]
-[td]MarkerColor
-[/td]
-[td]Red
-[/td]
-[td]The color of the markers.
-[/td]
-[/tr]
-[tr]
-[td]FontSize
-[/td]
-[td]5
-[/td]
-[td]The size of the text to use for the marker's content text.  Important!  See FontSize note below.
-[/td]
-[/tr]
-[/table]
 
 [h3]FontSize Note for MCM[/h3]
 
-Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become corrupted and may not save correctly.
+Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become confused and not save the change.
 Either use the slider or click on the number box and delete and re-type the value.
 
 When using the slider, the number does not have to be perfect; there is no real difference between using 5.02 or 5.0.
@@ -128,6 +64,11 @@ Thanks!
 
 [h1]Change Log[/h1]
 
+[h2]1.6.0[/h2]
+[list]
+[*]Added additional colors
+[/list]
+
 [h2]1.5.0[/h2]
 [list]
 [*]For game version 0.9.7+ only.
@@ -142,27 +83,9 @@ Thanks!
 [*]0.9.6 compatibility
 [/list]
 
-[h2]1.3.0[/h2]
+[h2]More Changes[/h2]
 [list]
-[*]Primary sort is now price.
-[*]The count per item includes the stack count.  Ex: '9mm x120' instead of '9mm x2'
-[/list]
-
-[h2]1.2.1[/h2]
-[list]
-[*]Fixed the "not in minimap screen" mode did not place marker when storage was open.
-[/list]
-
-[h2]1.2.0[/h2]
-[list]
-[*]Added hotkey to add a marker when in inventory and not the mini map.
-[*]Added game's "Click" sounds to the actions.
-[*]Changed defaults of "Add Marker" to F2
-[/list]
-
-[h2]1.1.0[/h2]
-[list]
-[*]Added listing the items at a marker when hovered.
+[*]See the github link for older changes.
 [/list]
 
 [h1]Credits[/h1]
