@@ -13,7 +13,7 @@ When in the Mini Map:
 
 
 When in inventory or when not in the minimap:
-* Press F2,F3, or F4 to add a marker at the player's location.  Each key is a different number.  Note that this *only* adds markers to prevent accidentally removing a marker.
+* Press F2,F3, or F4 to add a marker at the player's location.  Each key is a different color.  Note that this *only* adds markers to prevent accidentally removing a marker.
 * Press Shift+F2 to remove the marker at the player's location.
 
 Hovering over a marker will show all the items at that location\*.
