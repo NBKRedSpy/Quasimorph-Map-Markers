@@ -64,6 +64,11 @@ Thanks!
 
 [h1]Change Log[/h1]
 
+[h2]1.6.1[/h2]
+[list]
+[*]0.9.8.2 compatibility.
+[/list]
+
 [h2]1.6.0[/h2]
 [list]
 [*]Added additional colors

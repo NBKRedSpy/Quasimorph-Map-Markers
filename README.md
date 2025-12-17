@@ -51,6 +51,9 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
+## 1.6.1 
+* 0.9.8.2 compatibility. 
+
 ## 1.6.0
 * Added additional colors
 
