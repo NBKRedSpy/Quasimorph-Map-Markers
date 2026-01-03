@@ -135,7 +135,7 @@ internal static partial class MinimapScreen_Update_Patch
 
         StringBuilder sb = new StringBuilder();
         
-        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell, !showOnlyExplored);
+        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell, showOnlyExplored);
 
         // COPY WARNING:  MGSC.MinimapScreen.RefreshLabelUnderCursor(MGSC.MapCell). This is a modified copy
         // of the first loop in the function.
@@ -208,7 +208,7 @@ internal static partial class MinimapScreen_Update_Patch
         var floorStorage = __instance._itemsOnFloor
             .Get(cursorCell.X, cursorCell.Y);
 
-        storageItems = floorStorage.WasExplored || !examinedOnly ? floorStorage.Storage?.Items : null;
+        storageItems = floorStorage?.Storage.WasExamined ?? false || !examinedOnly ? floorStorage?.Storage.Items : null;
 
 
         if (storageItems != null) items.AddRange(storageItems);
