@@ -109,12 +109,33 @@ internal static partial class MinimapScreen_Update_Patch
     {
         CellPosition cursorCell = GetCellUnderCursor(__instance);
 
-        // Only run if there is a marker on the floor.
-        if (!Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell))) return;
+        //Debug
+        bool showOnlyExplored = false;
+
+        //emulate an option
+        bool showExploredItems = true;
+
+
+        //// Only run if there is a marker on the floor.
+        //if (!Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell))) return;
+
+        //Check for marker at location.
+        if (Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell)))
+        {
+            showOnlyExplored = false;
+        }
+        else if (showExploredItems)
+        {
+            showOnlyExplored = true;
+        }
+        else
+        {
+            return;
+        }
 
         StringBuilder sb = new StringBuilder();
         
-        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell);
+        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell, !showOnlyExplored);
 
         // COPY WARNING:  MGSC.MinimapScreen.RefreshLabelUnderCursor(MGSC.MapCell). This is a modified copy
         // of the first loop in the function.
@@ -154,8 +175,9 @@ internal static partial class MinimapScreen_Update_Patch
     /// </summary>
     /// <param name="__instance"></param>
     /// <param name="cursorCell"></param>
+    /// <param name="examinedOnly"></param>If true, only returns items from examined containers/corpses/floor.</param>
     /// <returns></returns>
-    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, CellPosition cursorCell)
+    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, CellPosition cursorCell, bool examinedOnly)
     {
         List<MapObstacle> obstacles = __instance._mapObstacles.GetAll(cursorCell.X, cursorCell.Y, false, false);
 
@@ -165,7 +187,7 @@ internal static partial class MinimapScreen_Update_Patch
 
         // Corpses
         storageItems = obstacles
-            .Where(x => x.CorpseStorage != null)
+            .Where(x => x.CorpseStorage != null && (x.CorpseStorage.WasExamined || !examinedOnly))
             .SelectMany(x =>
                 x.CorpseStorage.CreatureData.Inventory
                     .AllContainers.SelectMany(x => x.Items));
@@ -177,13 +199,17 @@ internal static partial class MinimapScreen_Update_Patch
             x.Components
                 .Where(x => x is Store)
                 .Cast<Store>()
+                .Where(x=> x.storage.WasExamined || !examinedOnly)
                 .SelectMany(x => x.storage.Items));
 
         if (storageItems != null) items.AddRange(storageItems);
 
-        // check for floor items
-        storageItems = __instance._itemsOnFloor.Get(cursorCell.X, cursorCell.Y)
-            ?.Storage.Items;
+        // -- check for floor items
+        var floorStorage = __instance._itemsOnFloor
+            .Get(cursorCell.X, cursorCell.Y);
+
+        storageItems = floorStorage.WasExplored || !examinedOnly ? floorStorage.Storage?.Items : null;
+
 
         if (storageItems != null) items.AddRange(storageItems);
 
