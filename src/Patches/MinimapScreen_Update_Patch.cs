@@ -109,22 +109,14 @@ internal static partial class MinimapScreen_Update_Patch
     {
         CellPosition cursorCell = GetCellUnderCursor(__instance);
 
-        //Debug
         bool showOnlyExplored = false;
-
-        //emulate an option
-        bool showExploredItems = true;
-
-
-        //// Only run if there is a marker on the floor.
-        //if (!Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell))) return;
 
         //Check for marker at location.
         if (Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell)))
         {
             showOnlyExplored = false;
         }
-        else if (showExploredItems)
+        else if (Plugin.Config.ShowExploredItems)
         {
             showOnlyExplored = true;
         }

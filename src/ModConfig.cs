@@ -101,6 +101,11 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
         set => Marker3Color = (Color32)value;
     }
 
+    /// <summary>
+    /// Show/Hide Explored Items
+    /// </summary>
+    public bool ShowExploredItems { get; set; } = false;
+
     public ModConfig()
     {
     }

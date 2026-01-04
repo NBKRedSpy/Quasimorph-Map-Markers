@@ -20,6 +20,10 @@ namespace MapMarkers.MCM
                 CreateConfigProperty(nameof(ModConfig.FontSize),
                     @"The size of the text to use for the marker's content text.", 1f, 20f),
 
+                CreateConfigProperty(nameof(ModConfig.ShowExploredItems),
+                    @"Always show items from explored containers, corpses, and floor tiles when hovering over a cell. Even without a map marker.", 
+                    "Show Explored Items", "MiniMap"),
+
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.ClearLocationsKey),
                     @"The key to press to clear all markers for the current level.", "Clear All Locations", "MiniMap"),
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.AddLocationKey),
