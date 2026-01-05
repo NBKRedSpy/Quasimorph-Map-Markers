@@ -22,7 +22,14 @@ namespace MapMarkers.MCM
 
                 CreateConfigProperty(nameof(ModConfig.ShowExploredItems),
                     @"Always show items from explored containers, corpses, and floor tiles when hovering over a cell. Even without a map marker.", 
-                    "Always Show Explored Items", "MiniMap"),
+                    "Always Show Explored Items"),
+
+                CreateConfigProperty(nameof(ModConfig.ShowSearchedIndicator),
+                    @"On the minimap, add an indicator for any items that have been searched",
+                    "Show Searched Indicator", "Search Indicator"),
+
+                CreateConfigProperty(nameof(ModConfig.SearchedIndicatorColorTransform), 
+                    @"The color of the searched indicator", "Searched Indicator Color", "Search Indicator"),
 
                 CreateEnumDropdown<KeyCode>(nameof(ModConfig.ClearLocationsKey),
                     @"The key to press to clear all markers for the current level.", "Clear All Locations", "MiniMap"),
