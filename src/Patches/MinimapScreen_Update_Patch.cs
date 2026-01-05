@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MapMarkers.Utility;
 using MGSC;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,8 @@ internal static partial class MinimapScreen_Update_Patch
         return new CellPosition(x, y);
     }
 
+    [CopyWarning(typeof(MinimapScreen), nameof(MinimapScreen.RefreshLabelUnderCursor), 
+        "This is a modified copy of the first loop in the function.")]
     public static void ShowMarkerItems(MinimapScreen __instance, MapGrid mapGrid)
     {
         CellPosition cursorCell = GetCellUnderCursor(__instance);
@@ -233,4 +236,3 @@ internal static partial class MinimapScreen_Update_Patch
         __instance._fogOfWar.RefreshMinimap(__instance._locationMetadata.ScanMonsters, __instance._locationMetadata.ScanItems, __instance._locationMetadata.ScanExit);
     }
 }
-
