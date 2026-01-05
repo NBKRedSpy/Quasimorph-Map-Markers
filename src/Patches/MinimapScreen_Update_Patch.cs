@@ -106,8 +106,7 @@ internal static partial class MinimapScreen_Update_Patch
         return new CellPosition(x, y);
     }
 
-    [CopyWarning(typeof(MinimapScreen), nameof(MinimapScreen.RefreshLabelUnderCursor), 
-        "This is a modified copy of the first loop in the function.")]
+    [CopyWarning(typeof(MinimapScreen), nameof(MinimapScreen.RefreshLabelUnderCursor))]
     public static void ShowMarkerItems(MinimapScreen __instance, MapGrid mapGrid)
     {
         CellPosition cursorCell = GetCellUnderCursor(__instance);

@@ -10,14 +10,14 @@ namespace MapMarkers.Utility;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = false)]
 internal class CopyWarningAttribute : Attribute
 {
-    public CopyWarningAttribute(Type originalType, string originalMethodName, string message)
+    public Type OriginalType { get; }
+    public string OriginalMethodName { get; }
+    public string Message { get; }
+
+    public CopyWarningAttribute(Type originalType, string originalMethodName, string message = "")
     {
         OriginalType = originalType;
         OriginalMethodName = originalMethodName;
         Message = message;
     }
-
-    public Type OriginalType { get; }
-    public string OriginalMethodName { get; }
-    public string Message { get; }
 }
