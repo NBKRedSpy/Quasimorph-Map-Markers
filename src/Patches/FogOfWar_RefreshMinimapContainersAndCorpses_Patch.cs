@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MapMarkers.Patches
 {
     /// <summary>
-    /// Handles marking up the minimap with POI locations and searched indicators.
+    /// Adds the search indicators to the minimap objects.
     /// </summary>
     [HarmonyPatch(typeof(FogOfWar), nameof(FogOfWar.RefreshMinimapContainersAndCorpses))]
     public static partial class FogOfWar_RefreshMinimapContainersAndCorpses_Patch
@@ -55,15 +55,45 @@ namespace MapMarkers.Patches
 
             CellSearchInfo cellItemsState = new();
 
+            SetFloorStates(fogOfWar, cellItemsState);
+            SetObstacleStates(fogOfWar, cellItemsState);
+            AddUiIndicators(fogOfWar, searchedColor, emptyColor, cellItemsState);
+        }
 
-            //Debug: test position to make conditional breakpoints easier.
-            //Remove when done testing.
-            Position pos = new Position(54, 70);
-            Position pos2 = new Position(54, 70);
+        private static void AddUiIndicators(FogOfWar fogOfWar, Color searchedColor, Color emptyColor, CellSearchInfo cellItemsState)
+        {
+            foreach (var cellItem in cellItemsState.CellStates)
+            {
+
+                CellItemsState state = cellItem.Value;
+                Color indicatorColor;
+
+                switch (state)
+                {
+                    case CellItemsState.NotSearched:
+                        continue;
+                    case CellItemsState.SearchedNotEmpty:
+                        indicatorColor = searchedColor;
+                        break;
+                    case CellItemsState.Empty:
+                        indicatorColor = emptyColor;
+                        break;
+                    default:
+                        throw new ApplicationException("Unexpected cell state found when adding searched/empty indicators to minimap. " +
+                            $"Value: '{state}'");
+                }
 
 
+                ////NOTE - Sinks and toilets will show the indicator offeset from the minimap location. 
+                ////  The dungeon regular map does this too.  Not bothering to adjust as it is not a big deal.
+                fogOfWar._mapTexture.SetPixel(cellItem.Key.X * 4, cellItem.Key.Y * 4 + 3, indicatorColor);
+
+            }
+        }
+        private static void SetFloorStates(FogOfWar fogOfWar, CellSearchInfo cellItemsState)
+        {
             //These are the "floor" tab for cell.  Can be a single item or a stack of items.
-            //  The tile can have bodies and a floor stack.
+            //  The tile can also have bodies.
             foreach (ItemOnFloor floorItem in fogOfWar._itemsOnFloor.Values)
             {
                 MapCell cell = fogOfWar._mapGrid.GetCell(floorItem.pos);
@@ -77,24 +107,32 @@ namespace MapMarkers.Patches
 
                 CellItemsState newState;
 
-                if(floorItem.Storage.WasExamined)
+                if (floorItem.Storage.WasExamined)
                 {
                     newState = floorItem.Storage.Empty ? CellItemsState.Empty : CellItemsState.SearchedNotEmpty;
                 }
                 else
                 {
-                    newState = CellItemsState.NotSearched;  
+                    newState = CellItemsState.NotSearched;
 
                 }
 
                 cellItemsState.SetCellState(cell.Position, newState);
             }
-            
+        }
+
+        /// <summary>
+        /// Sets the tile state for all obstacles on the map.
+        /// </summary>
+        /// <param name="fogOfWar"></param>
+        /// <param name="cellItemsState"></param>
+        private static void SetObstacleStates(FogOfWar fogOfWar, CellSearchInfo cellItemsState)
+        {
             // Iterate through all obstacles on the map to find searched or empty containers and corpses.
             foreach (MapObstacle obstacle in fogOfWar._mapObstacles.Obstacles)
             {
                 MapCell cell = fogOfWar._mapGrid.GetCell(obstacle.pos);
-                
+
                 //Not sure what the difference is between the two, but this check is from RefreshMinimap.
                 if (!cell.IsExplored && !cell.isSeen)
                 {
@@ -113,7 +151,7 @@ namespace MapMarkers.Patches
                     //Obstalces are different as their empty state is visible as long as it is not in the FOW.
                     if (obstacle.Store.storage.Empty)
                     {
-                        newState = CellItemsState.Empty; 
+                        newState = CellItemsState.Empty;
                     }
                     else if (obstacle.Store.Looted)
                     {
@@ -130,7 +168,7 @@ namespace MapMarkers.Patches
                 {
                     CellItemsState newState = CellItemsState.Invalid;
 
-                    if(obstacle.CorpseStorage.Looted)
+                    if (obstacle.CorpseStorage.Looted)
                     {
                         newState = obstacle.CorpseStorage.CreatureData.Inventory.Empty ? CellItemsState.Empty : CellItemsState.SearchedNotEmpty;
                     }
@@ -142,35 +180,6 @@ namespace MapMarkers.Patches
                     cellItemsState.SetCellState(cell.Position, newState);
                 }
             }
-
-            foreach (var cellItem in cellItemsState.CellStates)
-            {
-
-                CellItemsState state = cellItem.Value;
-                Color indicatorColor;
-
-                switch (state)
-                {
-                    case CellItemsState.NotSearched:
-                        continue;
-                    case CellItemsState.SearchedNotEmpty:
-                        indicatorColor = searchedColor;
-                        break;
-                    case CellItemsState.Empty:
-                        indicatorColor = emptyColor;    
-                        break;
-                    default:
-                        throw new ApplicationException("Unexpected cell state found when adding searched/empty indicators to minimap. " +
-                            $"Value: '{state}'");
-                }
-                
-
-                ////NOTE - Sinks and toilets will show the indicator offeset from the minimap location. 
-                ////  The dungeon regular map does this too.  Not bothering to adjust as it is not a big deal.
-                fogOfWar._mapTexture.SetPixel(cellItem.Key.X * 4, cellItem.Key.Y * 4 + 3, indicatorColor);
-
-            }
-
         }
     }
 }
