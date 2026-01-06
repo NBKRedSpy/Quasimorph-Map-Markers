@@ -2,6 +2,7 @@
 using MGSC;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using UnityEngine;
 
 namespace MapMarkers.Patches
@@ -32,7 +33,7 @@ namespace MapMarkers.Patches
 
                 if(Plugin.Config.ShowSearchedIndicator)
                 {
-                    AddSearchedIndicator(__instance, Plugin.Config.SearchedIndicatorColor, Plugin.Config.EmptyIndicatorColor);
+                    AddSearchedAndEmptyIndicator(__instance, Plugin.Config.SearchedIndicatorColor, Plugin.Config.EmptyIndicatorColor);
                 }
                 
             }
@@ -42,15 +43,69 @@ namespace MapMarkers.Patches
             }
         }
 
-        private static void AddSearchedIndicator(FogOfWar fogOfWar, Color searchedColor, Color emptyColor)
+        public record Position(int X, int Y)
         {
+
+            public Position(CellPosition cellPosition) : this(cellPosition.X, cellPosition.Y)
+            {
+
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Adds the searched and empty indicators to objects on the minimap.
+        /// </summary>
+        /// <param name="fogOfWar">Source of the map data and mini map screen</param>
+        /// <param name="searchedColor">The color for containers that were searched and not empty.</param>
+        /// <param name="emptyColor">The color for empty containers.  This overrides the searched indicator.</param>
+        private static void AddSearchedAndEmptyIndicator(FogOfWar fogOfWar, Color searchedColor, Color emptyColor)
+        {
+
+
+            //Contains any item storage locations which have been searched.
+            //  true = has items, false it is empty.
+            Dictionary<Position, bool> searchedCells = new();
+
+
+            //Debug cell
+
+            Position pos = new Position(54, 70);
+            Position pos2 = new Position(54, 70);
+
+            foreach (ItemOnFloor floorItem in fogOfWar._itemsOnFloor.Values)
+            {
+                MapCell cell = fogOfWar._mapGrid.GetCell(floorItem.pos);
+
+                //Not sure what the difference is between IsExplored and isSeen, but this check is from RefreshMinimap.
+                if ((!cell.IsExplored && !cell.isSeen) || floorItem.Storage.Empty || !floorItem.Storage.WasExamined)
+                {
+                    //Don't show indicator for not seen tiles or unsearched items.
+                    continue;
+                }
+
+                //TODO:  Fix bug: mixed states between items on the floor and corpses are messing up.
+                //If a corpse is on the location and empty, but a floor item hasn't been examined, the indicator shows as empty from the corpse.
+
+                //State:
+                // If a tile has multiple items, choose no indicator if any are unexamined.
+                // FloorItemNotExamined
+                // Examined showing indicator.
+                // CorpseEmpty
+                // CorpseNotEmpty
+
+                searchedCells[new Position(floorItem.pos)] = true;
+            }
+            
             // Iterate through all obstacles on the map to find searched or empty containers and corpses.
             foreach (MapObstacle obstacle in fogOfWar._mapObstacles.Obstacles)
             {
                 MapCell cell = fogOfWar._mapGrid.GetCell(obstacle.pos);
-
+                
                 //Not sure what the difference is between the two, but this check is from RefreshMinimap.
-                if(!cell.IsExplored && !cell.isSeen)
+                if (!cell.IsExplored && !cell.isSeen)
                 {
                     //Don't show indicators for seen/visible cells.
                     continue;
@@ -66,21 +121,33 @@ namespace MapMarkers.Patches
                 }
                 else if (obstacle.CorpseStorage != null && obstacle.ObstacleHealth.Health > 0)
                 {
-                    wasSearched = obstacle.CorpseStorage.Looted;
                     isEmpty = obstacle.CorpseStorage.CreatureData.Inventory.Empty;
+                    wasSearched = obstacle.CorpseStorage.Looted;
                 }
 
-                if(!wasSearched && !isEmpty)
+                if (!wasSearched && !isEmpty)
                 {
                     continue;
                 }
 
-                Color indicatorColor = isEmpty ? emptyColor : searchedColor;
+                //Translate the position
+                Position positionKey = new Position(obstacle.Position);
+                //Check if there is an existing state.  If not, default to false for "empty"
+                searchedCells.TryGetValue(positionKey, out bool existingState);
 
-                //NOTE - Sinks and toilets are weird as they are actually offset from where they really are on the game's internal map.
-                //  Not bothering to adjust.
-                fogOfWar._mapTexture.SetPixel(obstacle.Position.X * 4, obstacle.Position.Y * 4 + 3, indicatorColor);
+                searchedCells[positionKey] = existingState || !isEmpty;
             }
+
+            foreach (KeyValuePair<Position, bool> item in searchedCells)
+            {
+                Color indicatorColor = item.Value ? searchedColor : emptyColor;
+
+                ////NOTE - Sinks and toilets will show the indicator offeset from the minimap location. 
+                ////  The dungeon regular map does this too.  Not bothering to adjust as it is not a big deal.
+                fogOfWar._mapTexture.SetPixel(item.Key.X * 4, item.Key.Y * 4 + 3, indicatorColor);
+
+            }
+
         }
     }
 }
