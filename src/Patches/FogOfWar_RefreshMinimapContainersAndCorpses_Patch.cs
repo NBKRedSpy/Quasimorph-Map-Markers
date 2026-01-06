@@ -11,7 +11,7 @@ namespace MapMarkers.Patches
     /// Handles marking up the minimap with POI locations and searched indicators.
     /// </summary>
     [HarmonyPatch(typeof(FogOfWar), nameof(FogOfWar.RefreshMinimapContainersAndCorpses))]
-    public static class FogOfWar_RefreshMinimapContainersAndCorpses_Patch
+    public static partial class FogOfWar_RefreshMinimapContainersAndCorpses_Patch
     {
         public static void Postfix(FogOfWar __instance)
         {
@@ -43,17 +43,6 @@ namespace MapMarkers.Patches
             }
         }
 
-        public record Position(int X, int Y)
-        {
-
-            public Position(CellPosition cellPosition) : this(cellPosition.X, cellPosition.Y)
-            {
-
-            }
-        }
-
-
-
 
         /// <summary>
         /// Adds the searched and empty indicators to objects on the minimap.
@@ -64,39 +53,41 @@ namespace MapMarkers.Patches
         private static void AddSearchedAndEmptyIndicator(FogOfWar fogOfWar, Color searchedColor, Color emptyColor)
         {
 
-
-            //Contains any item storage locations which have been searched.
-            //  true = has items, false it is empty.
-            Dictionary<Position, bool> searchedCells = new();
+            CellSearchInfo cellItemsState = new();
 
 
-            //Debug cell
-
+            //Debug: test position to make conditional breakpoints easier.
+            //Remove when done testing.
             Position pos = new Position(54, 70);
             Position pos2 = new Position(54, 70);
 
+
+            //These are the "floor" tab for cell.  Can be a single item or a stack of items.
+            //  The tile can have bodies and a floor stack.
             foreach (ItemOnFloor floorItem in fogOfWar._itemsOnFloor.Values)
             {
                 MapCell cell = fogOfWar._mapGrid.GetCell(floorItem.pos);
 
                 //Not sure what the difference is between IsExplored and isSeen, but this check is from RefreshMinimap.
-                if ((!cell.IsExplored && !cell.isSeen) || floorItem.Storage.Empty || !floorItem.Storage.WasExamined)
+                if (!cell.IsExplored && !cell.isSeen)
                 {
                     //Don't show indicator for not seen tiles or unsearched items.
                     continue;
                 }
 
-                //TODO:  Fix bug: mixed states between items on the floor and corpses are messing up.
-                //If a corpse is on the location and empty, but a floor item hasn't been examined, the indicator shows as empty from the corpse.
+                CellItemsState newState;
 
-                //State:
-                // If a tile has multiple items, choose no indicator if any are unexamined.
-                // FloorItemNotExamined
-                // Examined showing indicator.
-                // CorpseEmpty
-                // CorpseNotEmpty
+                if(floorItem.Storage.WasExamined)
+                {
+                    newState = floorItem.Storage.Empty ? CellItemsState.Empty : CellItemsState.SearchedNotEmpty;
+                }
+                else
+                {
+                    newState = CellItemsState.NotSearched;  
 
-                searchedCells[new Position(floorItem.pos)] = true;
+                }
+
+                cellItemsState.SetCellState(cell.Position, newState);
             }
             
             // Iterate through all obstacles on the map to find searched or empty containers and corpses.
@@ -111,40 +102,72 @@ namespace MapMarkers.Patches
                     continue;
                 }
 
-                bool wasSearched = false;
-                bool isEmpty = false;
-
+                //Obstacle.  For instance a barrel.  Cannot have any other types of storage such as bodies.
                 if (obstacle.Store != null && obstacle.ObstacleHealth.Health > 0)
                 {
-                    isEmpty = obstacle.Store.storage.Empty;
-                    wasSearched = obstacle.Store.Looted;
+                    //empty, searched, not searched...
+
+                    CellItemsState newState = CellItemsState.Invalid;
+
+
+                    //Obstalces are different as their empty state is visible as long as it is not in the FOW.
+                    if (obstacle.Store.storage.Empty)
+                    {
+                        newState = CellItemsState.Empty; 
+                    }
+                    else if (obstacle.Store.Looted)
+                    {
+                        newState = CellItemsState.SearchedNotEmpty;
+                    }
+                    else
+                    {
+                        newState = CellItemsState.NotSearched;
+                    }
+
+                    cellItemsState.SetCellState(cell.Position, newState);
                 }
                 else if (obstacle.CorpseStorage != null && obstacle.ObstacleHealth.Health > 0)
                 {
-                    isEmpty = obstacle.CorpseStorage.CreatureData.Inventory.Empty;
-                    wasSearched = obstacle.CorpseStorage.Looted;
+                    CellItemsState newState = CellItemsState.Invalid;
+
+                    if(obstacle.CorpseStorage.Looted)
+                    {
+                        newState = obstacle.CorpseStorage.CreatureData.Inventory.Empty ? CellItemsState.Empty : CellItemsState.SearchedNotEmpty;
+                    }
+                    else
+                    {
+                        newState = CellItemsState.NotSearched;
+                    }
+
+                    cellItemsState.SetCellState(cell.Position, newState);
                 }
-
-                if (!wasSearched && !isEmpty)
-                {
-                    continue;
-                }
-
-                //Translate the position
-                Position positionKey = new Position(obstacle.Position);
-                //Check if there is an existing state.  If not, default to false for "empty"
-                searchedCells.TryGetValue(positionKey, out bool existingState);
-
-                searchedCells[positionKey] = existingState || !isEmpty;
             }
 
-            foreach (KeyValuePair<Position, bool> item in searchedCells)
+            foreach (var cellItem in cellItemsState.CellStates)
             {
-                Color indicatorColor = item.Value ? searchedColor : emptyColor;
+
+                CellItemsState state = cellItem.Value;
+                Color indicatorColor;
+
+                switch (state)
+                {
+                    case CellItemsState.NotSearched:
+                        continue;
+                    case CellItemsState.SearchedNotEmpty:
+                        indicatorColor = searchedColor;
+                        break;
+                    case CellItemsState.Empty:
+                        indicatorColor = emptyColor;    
+                        break;
+                    default:
+                        throw new ApplicationException("Unexpected cell state found when adding searched/empty indicators to minimap. " +
+                            $"Value: '{state}'");
+                }
+                
 
                 ////NOTE - Sinks and toilets will show the indicator offeset from the minimap location. 
                 ////  The dungeon regular map does this too.  Not bothering to adjust as it is not a big deal.
-                fogOfWar._mapTexture.SetPixel(item.Key.X * 4, item.Key.Y * 4 + 3, indicatorColor);
+                fogOfWar._mapTexture.SetPixel(cellItem.Key.X * 4, cellItem.Key.Y * 4 + 3, indicatorColor);
 
             }
 
