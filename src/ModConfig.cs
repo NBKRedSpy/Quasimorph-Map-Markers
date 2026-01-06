@@ -128,6 +128,20 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
         set => SearchedIndicatorColor  = (Color32)value;
     }
 
+    /// <summary>
+    /// The color of the dot used to indicate an empty container/corpse that has been searched on the mini map.
+    /// </summary>
+    public Color32 EmptyIndicatorColor { get; set; } = new Color32(90,89, 89, 255);      //Light grey
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for the Searched Empty Indicator
+    /// </summary>
+    [JsonIgnore]
+    public Color EmptyIndicatorColorTransform
+    {
+        get => (Color)EmptyIndicatorColor;
+        set => EmptyIndicatorColor  = (Color32)value;
+    }
 
 
 

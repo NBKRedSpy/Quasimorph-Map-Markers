@@ -7,7 +7,7 @@ using UnityEngine;
 namespace MapMarkers.Patches
 {
     /// <summary>
-    /// Renders the Points Of Interest on the minimap.
+    /// Handles marking up the minimap with POI locations and searched indicators.
     /// </summary>
     [HarmonyPatch(typeof(FogOfWar), nameof(FogOfWar.RefreshMinimapContainersAndCorpses))]
     public static class FogOfWar_RefreshMinimapContainersAndCorpses_Patch
@@ -32,7 +32,7 @@ namespace MapMarkers.Patches
 
                 if(Plugin.Config.ShowSearchedIndicator)
                 {
-                    AddSearchedIndicator(__instance, Plugin.Config.SearchedIndicatorColor);
+                    AddSearchedIndicator(__instance, Plugin.Config.SearchedIndicatorColor, Plugin.Config.EmptyIndicatorColor);
                 }
                 
             }
@@ -42,27 +42,44 @@ namespace MapMarkers.Patches
             }
         }
 
-        private static void AddSearchedIndicator(FogOfWar fogOfWar, Color color)
+        private static void AddSearchedIndicator(FogOfWar fogOfWar, Color searchedColor, Color emptyColor)
         {
+            // Iterate through all obstacles on the map to find searched or empty containers and corpses.
             foreach (MapObstacle obstacle in fogOfWar._mapObstacles.Obstacles)
             {
-                bool wasSearched = false;
+                MapCell cell = fogOfWar._mapGrid.GetCell(obstacle.pos);
 
-                if (obstacle.Store != null && obstacle.ObstacleHealth.Health > 0 && obstacle.Store.Looted)
+                //Not sure what the difference is between the two, but this check is from RefreshMinimap.
+                if(!cell.IsExplored && !cell.isSeen)
                 {
-                    wasSearched = true;
+                    //Don't show indicators for seen/visible cells.
+                    continue;
                 }
-                else if (obstacle.CorpseStorage != null && obstacle.CorpseStorage.Looted && obstacle.ObstacleHealth.Health > 0)
+
+                bool wasSearched = false;
+                bool isEmpty = false;
+
+                if (obstacle.Store != null && obstacle.ObstacleHealth.Health > 0)
                 {
-                    wasSearched = true;
+                    isEmpty = obstacle.Store.storage.Empty;
+                    wasSearched = obstacle.Store.Looted;
                 }
+                else if (obstacle.CorpseStorage != null && obstacle.ObstacleHealth.Health > 0)
+                {
+                    wasSearched = obstacle.CorpseStorage.Looted;
+                    isEmpty = obstacle.CorpseStorage.CreatureData.Inventory.Empty;
+                }
+
+                if(!wasSearched && !isEmpty)
+                {
+                    continue;
+                }
+
+                Color indicatorColor = isEmpty ? emptyColor : searchedColor;
 
                 //NOTE - Sinks and toilets are weird as they are actually offset from where they really are on the game's internal map.
                 //  Not bothering to adjust.
-                if (wasSearched)
-                {
-                    fogOfWar._mapTexture.SetPixel(obstacle.Position.X * 4, obstacle.Position.Y * 4 + 3 , color);
-                }
+                fogOfWar._mapTexture.SetPixel(obstacle.Position.X * 4, obstacle.Position.Y * 4 + 3, indicatorColor);
             }
         }
     }
