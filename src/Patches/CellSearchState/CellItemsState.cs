@@ -1,4 +1,4 @@
-﻿namespace MapMarkers.Patches
+﻿namespace MapMarkers.Patches.CellSearchState
 {
     /// <summary>
     /// The state of a cell's items for the searched/empty indicator.

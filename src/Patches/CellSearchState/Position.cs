@@ -1,6 +1,6 @@
 ﻿using MGSC;
 
-namespace MapMarkers.Patches
+namespace MapMarkers.Patches.CellSearchState
 {
         /// <summary>
         /// A cell position.  Used as a key for a location lookup since CellPosition does not 

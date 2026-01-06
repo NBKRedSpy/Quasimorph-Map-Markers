@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapMarkers.Patches
+namespace MapMarkers.Patches.CellSearchState
 {
     /// <summary>
     /// A map for the search data for all cells.
