@@ -5,25 +5,48 @@
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
 Support multiple marker colors to prioritize locations. \*\*
 
-To use: 
+# Functionality:
 
+Map Markers:
+* Toggle add and remove markers to the minimap.
+* Supports three different marker colors.
+* For marked locations, shows a list of the items at that location when hovered in the minimap.
+
+Optional Item Display:
+* Can optionally add indicators if a container is empty, and the search status of corpse and floor items.
+* Can optionally always show the list of containers if it has been searched before.
+
+# Minimap markers
 When in the Mini Map:
 * Right click to add or remove a location under the cursor.
-* Press F2 to add or remove a marker at the player's location. \*\*
-
+* Press F2 to add or remove a marker at the player's location.
+* Hover a marker to list the items at that location.
 
 When in inventory or when not in the minimap:
 * Press F2,F3, or F4 to add a marker at the player's location.  Each key is a different color.  Note that this *only* adds markers to prevent accidentally removing a marker.
 * Press Shift+F2 to remove the marker at the player's location.
 
-Hovering over a marker will show all the items at that location\*.
+# Location Search Status
 
-The settings can be configured.
+Adds a dot to the upper left locations of locations on the mini map.
+This is great for quickly checking if an item has been searched or is already empty.  It provides no more information than what is already available in the base game.
 
-\* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)  
-\*\* Currently the mod supports different marker colors, but cannot be added using the mouse on the minimap. This may or may not be changed in the future.
+![Search Indicator Key](./media/Search%20Indicator.png)
+
+This is optional and must be enabled in Mods menu to use.
+
+The "search" indicator is a single dot at for each item location.  By default, no dot means the item's contents are unknown, grey means it was searched or known to be empty, yellow indicates it has been searched or known and/or to have items.
+
+As long as a container is visible in the FoW, the empty/full status will be shown since the game shows different images based on the contents.  For instance, an empty bookshelf has no books, while one with items does.
+
+Note: The search status indicators are temporarily hidden at the mercenary's current location.
 
 # Configuration
+Common configuration options in the Mods Menu:
+* Change colors.
+* Change Hotkeys.
+* Enable and disable the optional functionality.
+
 ## MCM
 This mod supports the Mod Configuration Menu and is the preferred method for changing settings.  Use the Mods button on the main menu.
 

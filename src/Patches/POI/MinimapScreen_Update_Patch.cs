@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace MapMarkers.Patches;
+namespace MapMarkers.Patches.POI;
 
 /// <summary>
 /// Handles adding and removing locations on the minimap screen

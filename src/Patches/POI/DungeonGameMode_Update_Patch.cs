@@ -3,7 +3,7 @@ using MGSC;
 using System;
 using UnityEngine;
 
-namespace MapMarkers.Patches;
+namespace MapMarkers.Patches.POI;
 
 /// <summary>
 /// Handles adding a marker at the merc's location when not in the mini map.

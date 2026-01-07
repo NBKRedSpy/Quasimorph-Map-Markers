@@ -1,6 +1,6 @@
 ﻿using MGSC;
 
-namespace MapMarkers.Patches;
+namespace MapMarkers.Patches.POI;
 
 
 /// <summary>

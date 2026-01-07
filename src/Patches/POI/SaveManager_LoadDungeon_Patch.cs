@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapMarkers.Patches
+namespace MapMarkers.Patches.POI
 {
     /// <summary>
     /// Called when a dungeon is loaded.

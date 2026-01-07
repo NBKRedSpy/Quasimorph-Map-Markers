@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using UnityEngine;
 
-namespace MapMarkers.Patches
+namespace MapMarkers.Patches.CellSearchStatePatches
 {
     /// <summary>
     /// Adds the search indicators to the minimap objects.

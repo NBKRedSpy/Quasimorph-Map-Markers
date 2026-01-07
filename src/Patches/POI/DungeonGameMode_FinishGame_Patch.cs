@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapMarkers.Patches;
+namespace MapMarkers.Patches.POI;
 
 /// <summary>
+/// Handles saving the POI state on level change
 /// Misleading name.  FinishGame includes changing to different levels 
 /// as well merc dying or winning.
 /// </summary>
