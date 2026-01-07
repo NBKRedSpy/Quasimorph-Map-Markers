@@ -1,12 +1,11 @@
 ﻿using HarmonyLib;
-using MapMarkers.Patches.CellSearchState;
 using MGSC;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using UnityEngine;
 
-namespace MapMarkers.Patches.CellSearchStatePatches
+namespace MapMarkers.Patches.CellSearchState
 {
     /// <summary>
     /// Adds the search indicators to the minimap objects.
@@ -100,23 +99,14 @@ namespace MapMarkers.Patches.CellSearchStatePatches
                 MapCell cell = fogOfWar._mapGrid.GetCell(floorItem.pos);
 
                 //Not sure what the difference is between IsExplored and isSeen, but this check is from RefreshMinimap.
-                if (!cell.IsExplored && !cell.isSeen)
+                if ((!cell.IsExplored && !cell.isSeen) || floorItem.Storage.Empty)
                 {
                     //Don't show indicator for not seen tiles or unsearched items.
                     continue;
                 }
 
                 CellItemsState newState;
-
-                if (floorItem.Storage.WasExamined)
-                {
-                    newState = floorItem.Storage.Empty ? CellItemsState.Empty : CellItemsState.SearchedNotEmpty;
-                }
-                else
-                {
-                    newState = CellItemsState.NotSearched;
-
-                }
+                newState = floorItem.Storage.WasExamined ? CellItemsState.SearchedNotEmpty : CellItemsState.NotSearched;
 
                 cellItemsState.SetCellState(cell.Position, newState);
             }
@@ -124,6 +114,7 @@ namespace MapMarkers.Patches.CellSearchStatePatches
 
         /// <summary>
         /// Sets the tile state for all obstacles on the map.
+        /// They are containers and corpses.
         /// </summary>
         /// <param name="fogOfWar"></param>
         /// <param name="cellItemsState"></param>
