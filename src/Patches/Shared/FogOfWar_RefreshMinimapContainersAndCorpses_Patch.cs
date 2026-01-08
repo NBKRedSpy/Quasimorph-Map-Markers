@@ -1,11 +1,12 @@
 ﻿using HarmonyLib;
+using MapMarkers.Patches.CellSearchState;
 using MGSC;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using UnityEngine;
 
-namespace MapMarkers.Patches.CellSearchState
+namespace MapMarkers.Patches.Shared
 {
     /// <summary>
     /// Adds the search indicators to the minimap objects.

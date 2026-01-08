@@ -39,7 +39,8 @@ The "search" indicator is a single dot at for each item location.  By default, n
 
 As long as a container is visible in the FoW, the empty/full status will be shown since the game shows different images based on the contents.  For instance, an empty bookshelf has no books, while one with items does.
 
-Note: The search status indicators are temporarily hidden at the mercenary's current location.
+Note: If a tab shows a + (new), the location will continue to be "not searched" until that tab is examined.
+
 
 # Configuration
 Common configuration options in the Mods Menu:
@@ -70,10 +71,11 @@ It helps motivate me to maintain as well as create mods.
 
 Thanks!  
 
-# Issues
-* Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
-
 # Change Log
+## 1.7.0
+* Added status indicator.
+* Added Show Explored Items option.
+
 ## 1.6.1 
 * 0.9.8.2 compatibility. 
 

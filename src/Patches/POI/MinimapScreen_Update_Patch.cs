@@ -179,9 +179,6 @@ internal static partial class MinimapScreen_Update_Patch
 
         IEnumerable<BasePickupItem> storageItems;
 
-        //TODO:  Might need some feedback to indicate that one or more storage / corpse / floor has unexamined items.  
-        //  Right now, if examinedOnly is true, those items are just silently skipped.
-
         // Corpses
         storageItems = obstacles
             .Where(x => x.CorpseStorage != null && (x.CorpseStorage.WasExamined || !examinedOnly))
