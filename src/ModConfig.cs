@@ -1,5 +1,6 @@
 ﻿using MapMarkers.Mcm;
 using MapMarkers.Utility;
+using MGSC;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
@@ -100,6 +101,49 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
         get => (Color)Marker3Color;
         set => Marker3Color = (Color32)value;
     }
+
+    /// <summary>
+    /// If true, will show the contents of items that have been searched (containers, corpses, floor items) when hovering over a cell, 
+    /// even if there is no map marker there.
+    /// </summary>
+    public bool ShowExploredItems { get; set; } = false;
+
+    /// <summary>
+    /// On the mini map, objects have been searched will have an indicator added to it.
+    /// </summary>
+    public bool ShowSearchedIndicator { get; set; } = false;
+
+    /// <summary>
+    /// The color of the dot used to indicate a searched container/corpse on the mini map.
+    /// </summary>
+    public Color32 SearchedIndicatorColor { get; set; } = new Color(251/255f, 227/255f, 67/255f);      //This is Colors.Yellow, but the game's Colors object isn't inited at this point.
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for the Searched Indicator
+    /// </summary>
+    [JsonIgnore]
+    public Color SearchedIndicatorColorTransform
+    {
+        get => (Color)SearchedIndicatorColor;
+        set => SearchedIndicatorColor  = (Color32)value;
+    }
+
+    /// <summary>
+    /// The color of the dot used to indicate an empty container/corpse that has been searched on the mini map.
+    /// </summary>
+    public Color32 EmptyIndicatorColor { get; set; } = new Color32(90,89, 89, 255);      //Light grey
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for the Searched Empty Indicator
+    /// </summary>
+    [JsonIgnore]
+    public Color EmptyIndicatorColorTransform
+    {
+        get => (Color)EmptyIndicatorColor;
+        set => EmptyIndicatorColor  = (Color32)value;
+    }
+
+
 
     public ModConfig()
     {

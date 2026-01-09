@@ -1,17 +1,34 @@
 [h1]Quasimorph Map Markers[/h1]
 
+[img]https://raw.githubusercontent.com/NBKRedSpy/Quasimorph-Map-Markers/main/media/Marker%20Example.webp[/img]
 
 [h1]Description[/h1]
 
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
 Support multiple marker colors to prioritize locations. **
 
-To use:
+[h1]Functionality:[/h1]
+
+Map Markers:
+[list]
+[*]Toggle add and remove markers to the minimap.
+[*]Supports three different marker colors.
+[*]For marked locations, shows a list of the items at that location when hovered in the minimap.
+[/list]
+
+Optional Item Display:
+[list]
+[*]Can optionally add indicators if a container is empty, and the search status of corpse and floor items.
+[*]Can optionally always show the list of containers if it has been searched before.
+[/list]
+
+[h1]Minimap markers[/h1]
 
 When in the Mini Map:
 [list]
 [*]Right click to add or remove a location under the cursor.
-[*]Press F2 to add or remove a marker at the player's location. **
+[*]Press F2 to add or remove a marker at the player's location.
+[*]Hover a marker to list the items at that location.
 [/list]
 
 When in inventory or when not in the minimap:
@@ -20,14 +37,30 @@ When in inventory or when not in the minimap:
 [*]Press Shift+F2 to remove the marker at the player's location.
 [/list]
 
-Hovering over a marker will show all the items at that location*.
+[h1]Location Search Status[/h1]
 
-The settings can be configured.
+[img]https://raw.githubusercontent.com/NBKRedSpy/Quasimorph-Map-Markers/main/media/SearchIndicatorExample.webp[/img] [img]https://raw.githubusercontent.com/NBKRedSpy/Quasimorph-Map-Markers/main/media/Search%20Indicator.webp[/img]
 
-* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)
-** Currently the mod supports different marker colors, but cannot be added using the mouse on the minimap. This may or may not be changed in the future.
+Disabled by default. Adds a dot to the upper left locations of locations on the mini map.
+This is great for quickly checking if an item has been searched or is already empty.  It provides the same information available in the base game.
+
+The "search" indicator is a single dot at for each item location.  By default, no dot means the item's contents are unknown, grey means it was searched or known to be empty, yellow indicates it has been searched or known and/or to have items.
+
+As long as a container is visible in the FoW, the empty/full status will be shown since the game shows different images based on the contents.  For instance, an empty bookshelf has no books, while one with items does.
+
+[h3]Notes[/h3]
+
+If a tab shows a + (new), the location will continue to be "not searched" until that tab is examined.
+Toilets and sinks will have their markers one spot lower due to how the game visualizes these specific containers.
 
 [h1]Configuration[/h1]
+
+Common configuration options in the Mods Menu:
+[list]
+[*]Change colors.
+[*]Change Hotkeys.
+[*]Enable and disable the optional functionality.
+[/list]
 
 [h2]MCM[/h2]
 
@@ -57,12 +90,13 @@ It helps motivate me to maintain as well as create mods.
 
 Thanks!
 
-[h1]Issues[/h1]
-[list]
-[*]Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
-[/list]
-
 [h1]Change Log[/h1]
+
+[h2]1.7.0[/h2]
+[list]
+[*]Added status indicator.
+[*]Added Show Explored Items option.
+[/list]
 
 [h2]1.6.1[/h2]
 [list]

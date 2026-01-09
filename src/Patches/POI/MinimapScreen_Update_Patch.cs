@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MapMarkers.Utility;
 using MGSC;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace MapMarkers.Patches;
+namespace MapMarkers.Patches.POI;
 
 /// <summary>
 /// Handles adding and removing locations on the minimap screen
@@ -105,16 +106,30 @@ internal static partial class MinimapScreen_Update_Patch
         return new CellPosition(x, y);
     }
 
+    [CopyWarning(typeof(MinimapScreen), nameof(MinimapScreen.RefreshLabelUnderCursor))]
     public static void ShowMarkerItems(MinimapScreen __instance, MapGrid mapGrid)
     {
         CellPosition cursorCell = GetCellUnderCursor(__instance);
 
-        // Only run if there is a marker on the floor.
-        if (!Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell))) return;
+        bool showOnlyExplored = false;
+
+        //Check for marker at location.
+        if (Plugin.CurrentSavePoiStorage.CurrentDungeonLevelPois.Any(x => CellsEqual(x.Position, cursorCell)))
+        {
+            showOnlyExplored = false;
+        }
+        else if (Plugin.Config.ShowExploredItems)
+        {
+            showOnlyExplored = true;
+        }
+        else
+        {
+            return;
+        }
 
         StringBuilder sb = new StringBuilder();
         
-        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell);
+        List<FloorItem> floorItems = GetAllCellItems(__instance, cursorCell, showOnlyExplored);
 
         // COPY WARNING:  MGSC.MinimapScreen.RefreshLabelUnderCursor(MGSC.MapCell). This is a modified copy
         // of the first loop in the function.
@@ -154,8 +169,9 @@ internal static partial class MinimapScreen_Update_Patch
     /// </summary>
     /// <param name="__instance"></param>
     /// <param name="cursorCell"></param>
+    /// <param name="examinedOnly"></param>If true, only returns items from examined containers/corpses/floor.</param>
     /// <returns></returns>
-    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, CellPosition cursorCell)
+    private static List<FloorItem> GetAllCellItems(MinimapScreen __instance, CellPosition cursorCell, bool examinedOnly)
     {
         List<MapObstacle> obstacles = __instance._mapObstacles.GetAll(cursorCell.X, cursorCell.Y, false, false);
 
@@ -165,7 +181,7 @@ internal static partial class MinimapScreen_Update_Patch
 
         // Corpses
         storageItems = obstacles
-            .Where(x => x.CorpseStorage != null)
+            .Where(x => x.CorpseStorage != null && (x.CorpseStorage.WasExamined || !examinedOnly))
             .SelectMany(x =>
                 x.CorpseStorage.CreatureData.Inventory
                     .AllContainers.SelectMany(x => x.Items));
@@ -177,13 +193,17 @@ internal static partial class MinimapScreen_Update_Patch
             x.Components
                 .Where(x => x is Store)
                 .Cast<Store>()
+                .Where(x=> x.storage.WasExamined || !examinedOnly)
                 .SelectMany(x => x.storage.Items));
 
         if (storageItems != null) items.AddRange(storageItems);
 
-        // check for floor items
-        storageItems = __instance._itemsOnFloor.Get(cursorCell.X, cursorCell.Y)
-            ?.Storage.Items;
+        // -- check for floor items
+        var floorStorage = __instance._itemsOnFloor
+            .Get(cursorCell.X, cursorCell.Y);
+
+        storageItems = floorStorage?.Storage.WasExamined ?? false || !examinedOnly ? floorStorage?.Storage.Items : null;
+
 
         if (storageItems != null) items.AddRange(storageItems);
 
@@ -212,4 +232,3 @@ internal static partial class MinimapScreen_Update_Patch
         __instance._fogOfWar.RefreshMinimap(__instance._locationMetadata.ScanMonsters, __instance._locationMetadata.ScanItems, __instance._locationMetadata.ScanExit);
     }
 }
-

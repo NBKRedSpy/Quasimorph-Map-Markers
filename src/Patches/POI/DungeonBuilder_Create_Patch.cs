@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using MGSC;
 
-namespace MapMarkers.Patches
+namespace MapMarkers.Patches.POI
 {
     /// <summary>
     /// Called when a dungeon is created (new) or loaded (resumed)
