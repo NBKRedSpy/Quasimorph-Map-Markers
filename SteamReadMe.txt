@@ -1,5 +1,6 @@
 [h1]Quasimorph Map Markers[/h1]
 
+[img]https://raw.githubusercontent.com/NBKRedSpy/Quasimorph-Map-Markers/main/media/Marker%20Example.png[/img]
 
 [h1]Description[/h1]
 
@@ -38,11 +39,10 @@ When in inventory or when not in the minimap:
 
 [h1]Location Search Status[/h1]
 
-Adds a dot to the upper left locations of locations on the mini map.
-This is great for quickly checking if an item has been searched or is already empty.  It provides no more information than what is already available in the base game.
+[img]https://raw.githubusercontent.com/NBKRedSpy/Quasimorph-Map-Markers/main/media/SearchIndicatorExample.webp[/img] [img]https://raw.githubusercontent.com/NBKRedSpy/Quasimorph-Map-Markers/main/media/Search%20Indicator.webp[/img]
 
-
-This is optional and must be enabled in Mods menu to use.
+Disabled by default. Adds a dot to the upper left locations of locations on the mini map.
+This is great for quickly checking if an item has been searched or is already empty.  It provides the same information available in the base game.
 
 The "search" indicator is a single dot at for each item location.  By default, no dot means the item's contents are unknown, grey means it was searched or known to be empty, yellow indicates it has been searched or known and/or to have items.
 

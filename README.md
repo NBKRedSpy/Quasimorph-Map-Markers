@@ -27,13 +27,12 @@ When in inventory or when not in the minimap:
 * Press Shift+F2 to remove the marker at the player's location.
 
 # Location Search Status
+![Minimap example of search indicator](./media/SearchIndicatorExample.webp) ![Search Indicator Key](./media/Search%20Indicator.webp)
 
-Adds a dot to the upper left locations of locations on the mini map.
-This is great for quickly checking if an item has been searched or is already empty.  It provides no more information than what is already available in the base game.
 
-![Search Indicator Key](./media/Search%20Indicator.png)
+Disabled by default. Adds a dot to the upper left locations of locations on the mini map.
+This is great for quickly checking if an item has been searched or is already empty.  It provides the same information available in the base game.
 
-This is optional and must be enabled in Mods menu to use.
 
 The "search" indicator is a single dot at for each item location.  By default, no dot means the item's contents are unknown, grey means it was searched or known to be empty, yellow indicates it has been searched or known and/or to have items.
 
