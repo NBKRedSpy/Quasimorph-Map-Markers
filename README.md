@@ -3,7 +3,24 @@
 
 # Description
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
-Support multiple marker colors to prioritize locations. \*\*
+(Disabled by default) Can optionally add the search status dots on containers on the map.  For example, searched, empty, not searched.
+
+## Markers
+Press F2,F3, or F4 on the the main map to add a red, green, or yellow marker on the mini map.  
+Press Shift + F2 to remove the marker.
+In the minimap screen, right click to add or remove a red marker.
+Colors and keys can be configured.
+
+## Optional - Map Search Status
+Adds a small dot to the upper right of a location that can have items on the minimap.  
+Must be enabled in the settings.
+
+* No dot means it has not been searched.
+* Yellow dot means has been searched and has items.
+* Grey means there are no items.
+
+
+
 
 # Functionality:
 
