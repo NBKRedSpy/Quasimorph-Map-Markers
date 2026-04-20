@@ -45,6 +45,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Folder Include="obj\" />
 	  <Folder Include="Properties\" />
 	</ItemGroup>
 
