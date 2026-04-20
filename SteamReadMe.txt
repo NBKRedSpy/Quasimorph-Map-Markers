@@ -64,6 +64,11 @@ Thanks!
 
 [h1]Change Log[/h1]
 
+[h2]1.6.2[/h2]
+[list]
+[*]UNSTABLE BETA.501 compatibility
+[/list]
+
 [h2]1.6.1[/h2]
 [list]
 [*]0.9.8.2 compatibility.
