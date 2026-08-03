@@ -51,32 +51,13 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
-## 1.6.2
-* UNSTABLE BETA.501 compatibility
+See the CHANGELOG.md on the gib repository linked below
 
-## 1.6.1 
-* 0.9.8.2 compatibility. 
-
-## 1.6.0
-* Added additional colors
-
-## 1.5.0
-* For game version 0.9.7+ only.
-* Can now remove markers when not in the minimap.  Defaults to Shift+F2.
-* All keybinds can be set in the Mod Config menu.  The user no longer needs to edit the config.json directly.
-* Internal: Updated Json to MCM framework to latest iteration.
-
-## 1.4.0
-* For game version 0.9.6+ only.
-* 0.9.6 compatibility
-
-## More Changes
-* See the github link for older changes.
+# Source Code
+Source code is available on GitHub at https://github.com/NBKRedSpy/Quasimorph-Map-Markers
 
 # Credits
 * Special thanks to Crynano for his excellent Mod Configuration Menu. 
 * [Treasure icons created by Smashicons - Flaticon](https://www.flaticon.com/free-icons/treasure)
 * [Annotely](https://annotely.com/) for image annotation.
 
-# Source Code
-Source code is available on GitHub at https://github.com/NBKRedSpy/Quasimorph-Map-Markers

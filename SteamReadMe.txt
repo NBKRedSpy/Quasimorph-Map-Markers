@@ -64,39 +64,11 @@ Thanks!
 
 [h1]Change Log[/h1]
 
-[h2]1.6.2[/h2]
-[list]
-[*]UNSTABLE BETA.501 compatibility
-[/list]
+See the CHANGELOG.md on the gib repository linked below
 
-[h2]1.6.1[/h2]
-[list]
-[*]0.9.8.2 compatibility.
-[/list]
+[h1]Source Code[/h1]
 
-[h2]1.6.0[/h2]
-[list]
-[*]Added additional colors
-[/list]
-
-[h2]1.5.0[/h2]
-[list]
-[*]For game version 0.9.7+ only.
-[*]Can now remove markers when not in the minimap.  Defaults to Shift+F2.
-[*]All keybinds can be set in the Mod Config menu.  The user no longer needs to edit the config.json directly.
-[*]Internal: Updated Json to MCM framework to latest iteration.
-[/list]
-
-[h2]1.4.0[/h2]
-[list]
-[*]For game version 0.9.6+ only.
-[*]0.9.6 compatibility
-[/list]
-
-[h2]More Changes[/h2]
-[list]
-[*]See the github link for older changes.
-[/list]
+Source code is available on GitHub at https://github.com/NBKRedSpy/Quasimorph-Map-Markers
 
 [h1]Credits[/h1]
 [list]
@@ -104,7 +76,3 @@ Thanks!
 [*][url=https://www.flaticon.com/free-icons/treasure]Treasure icons created by Smashicons - Flaticon[/url]
 [*][url=https://annotely.com/]Annotely[/url] for image annotation.
 [/list]
-
-[h1]Source Code[/h1]
-
-Source code is available on GitHub at https://github.com/NBKRedSpy/Quasimorph-Map-Markers
