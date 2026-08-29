@@ -4,6 +4,7 @@
 [h1]Description[/h1]
 
 Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
+Adds a search status indicator to each lootable item.  (Can be disabled in the options)
 Support multiple marker colors to prioritize locations. **
 
 To use:
@@ -12,6 +13,7 @@ When in the Mini Map:
 [list]
 [*]Right click to add or remove a location under the cursor.
 [*]Press F2 to add or remove a marker at the player's location. **
+[*]Hold the Alt key to show the indicator for unsearched loot containers and bodies..
 [/list]
 
 When in inventory or when not in the minimap:

@@ -1,3 +1,8 @@
+# 1.8.0
+* Added Unsearched mode.
+* Changed from Input to InputHelper for compatibility.
+* Changed search indicators to be enabled by default.
+
 # 1.7.1
 * Beta to 1.0 update.
 
