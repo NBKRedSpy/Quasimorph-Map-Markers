@@ -37,8 +37,7 @@ namespace MapMarkers.Patches.Shared
 
                 if(Plugin.Config.ShowSearchedIndicator)
                 {
-                    //Debug - add to the config file.
-                    bool hideBarrels = true && MinimapScreen_Update_Patch.UnsearchedDisplayMode;
+                    bool hideBarrels = Plugin.Config.HideBarrelsInAltMode && MinimapScreen_Update_Patch.UnsearchedDisplayMode;
 
                     AddSearchedAndEmptyIndicator(__instance, MinimapScreen_Update_Patch.UnsearchedDisplayMode, hideBarrels,
                         Plugin.Config.UnsearchedIndicatorColor, Plugin.Config.SearchedIndicatorColor, Plugin.Config.EmptyIndicatorColor);

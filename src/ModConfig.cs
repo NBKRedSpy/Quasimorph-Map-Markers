@@ -119,6 +119,11 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     public bool ShowSearchedIndicator { get; set; } = true;
 
     /// <summary>
+    /// If true, hide barrels while alt mode is enabled and showing unsearched locations.
+    /// </summary>
+    public bool HideBarrelsInAltMode { get; set; } = false;
+
+    /// <summary>
     /// The color of the dot used to indicate a container/corpse that has not been searched and is currently being shown in unsearched mode on the mini map.
     /// </summary>
     public Color32 UnsearchedIndicatorColor { get; set; } = Color.magenta;
