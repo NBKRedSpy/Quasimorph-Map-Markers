@@ -10,7 +10,7 @@ This mod adds the ability to add markers to the minimap, as well as show the sea
 
 Hold alt to show only the storage items that have not been searched yet.  Optionally, this mode can ignore barrels.  Must be enabled in the settings.
 
-Colors and other options can be changed via the Mods button on the main menu.
+Colors, hotkeys, and other options can be changed via the Mods button on the main menu.
 
 # Usage
 
