@@ -1,29 +1,35 @@
 # Quasimorph Map Markers
 ![marker example](media/Marker%20Example.png)
 
-# Description
-Allows the user to add markers to the minimap.  For instance, mark the location of valuable loot to come back for later.
-Adds a search status indicator to each lootable item.  (Can be disabled in the options)
-Support multiple marker colors to prioritize locations. \*\*
+# Overview
+Ever been in a mission and wanted to come back for something later?  But then forget where the heck it was?  
 
-To use: 
+Do you have the floor scanner and are tired of having to hunt down the ten storage items that aren't empty out of hundred on the level?
 
-When in the Mini Map:
+This mod adds the ability to add markers to the minimap, as well as show the search status of storage items.
+
+Hold alt to show only the storage items that have not been searched yet.  Optionally, this mode can ignore barrels.  Must be enabled in the settings.
+
+Colors and other options can be changed via the Mods button on the main menu.
+
+# Usage
+
+## When In The Mini Map:
 * Right click to add or remove a location under the cursor.
-* Press F2 to add or remove a marker at the player's location. \*\*
-* Hold the Alt key to show the indicator for unsearched loot containers and bodies..
+* Press F2 to add or remove a marker at the player's location. \* 
+* Hold the Alt key to show the indicator for unsearched loot containers and bodies.
 
+\* Currently the mod supports different marker colors, but cannot be added using the mouse on the minimap. This may or may not be changed in the future.
 
-When in inventory or when not in the minimap:
+## When In Inventory Or When Not In The Minimap:
 * Press F2,F3, or F4 to add a marker at the player's location.  Each key is a different color.  Note that this *only* adds markers to prevent accidentally removing a marker.
 * Press Shift+F2 to remove the marker at the player's location.
-
-Hovering over a marker will show all the items at that location\*.
-
-The settings can be configured.
+* Hovering over a marker will show all the items at that location\*.
 
 \* The hover listing can be exploited to show anything on the map, but I leave that to the user's personal preferences on such matters :)  
-\*\* Currently the mod supports different marker colors, but cannot be added using the mouse on the minimap. This may or may not be changed in the future.
+
+The colors and other settings can be configured using the Mods button on the main menu.
+
 
 # Configuration
 ## MCM
@@ -43,9 +49,8 @@ The list of valid keyboard keys can be found  at the bottom of https://docs.unit
 Beware that numbers 0-9 are Alpha0 - Alpha9.  Most of the other keys are as expected such as X for X.
 Use "None" to not bind the key.
 
-# Support My Mods
+# Support
 If you enjoy my mods and want to buy me a coffee, check out my [Ko-Fi](https://ko-fi.com/nbkredspy71915) page.
-It helps motivate me to maintain as well as create mods.
 
 Thanks!  
 
@@ -53,7 +58,7 @@ Thanks!
 * Placing a marker at the merc's location can be hard to see due to the merc icon being on top.
 
 # Change Log
-See the CHANGELOG.md on the gib repository linked below
+See the CHANGELOG.md at https://github.com/NBKRedSpy/Quasimorph-Map-Markers/blob/main/CHANGELOG.md
 
 # Source Code
 Source code is available on GitHub at https://github.com/NBKRedSpy/Quasimorph-Map-Markers
