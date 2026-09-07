@@ -15,8 +15,13 @@ namespace MapMarkers.Patches.POI;
 [HarmonyPatch(typeof(MinimapScreen), nameof(MinimapScreen.LateUpdate))]
 internal static partial class MinimapScreen_Update_Patch
 {
+    public static bool UnsearchedDisplayMode { get; set; } = false;
+
     public static void Postfix(MinimapScreen __instance)
     {
+
+        UnsearchedDisplayMode = false;
+
         try
         {
             // Right click to add item.
@@ -51,8 +56,7 @@ internal static partial class MinimapScreen_Update_Patch
                     Plugin.PlayClickSound();
                 }
             }
-
-            if (Input.GetKeyDown(Plugin.Config.ClearLocationsKey))
+            else if (InputHelper.GetKeyDown(Plugin.Config.ClearLocationsKey))
             {
                 PoiLocations locations = Plugin.CurrentSavePoiStorage;
                 locations.CurrentDungeonLevelPois.Clear();
@@ -61,9 +65,8 @@ internal static partial class MinimapScreen_Update_Patch
                 Plugin.PlayClickSound();
                 RefreshMap(__instance);
             }
-
             // Player's current location
-            if (Input.GetKeyDown(Plugin.Config.AddPlayerLocationKey))
+            else if (InputHelper.GetKeyDown(Plugin.Config.AddPlayerLocationKey))
             {
                 PoiLocations locations = Plugin.CurrentSavePoiStorage;
 
@@ -88,6 +91,18 @@ internal static partial class MinimapScreen_Update_Patch
                 locations.Save();
                 RefreshMap(__instance);
             }
+            //Reset alternative display mode - show unsearched only.
+            else if (Plugin.Config.EnableAltDisplay && InputHelper.GetKeyUp(KeyCode.LeftAlt))
+            {
+                UnsearchedDisplayMode = false;
+                RefreshMap(__instance);
+            }
+            //Alternative display mode - show unsearched only.
+            else if (Plugin.Config.EnableAltDisplay && InputHelper.GetKeyDown(KeyCode.LeftAlt))
+            {
+                UnsearchedDisplayMode = !UnsearchedDisplayMode;
+                RefreshMap(__instance);
+            }   
 
             ShowMarkerItems(__instance, __instance._mapGrid);
         }

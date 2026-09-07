@@ -25,20 +25,20 @@ internal static class DungeonGameMode_Update_Patch
             }
 
             CellPosition pos = __instance.Creatures.Player.CreatureData.Position;
-            bool isRemoving = Input.GetKey(Plugin.Config.RemovePlayerLocationOnDungeonModifierKey);
+            bool isRemoving = InputHelper.GetKey(Plugin.Config.RemovePlayerLocationOnDungeonModifierKey);
 
             // Check for Marker 1
-            if (Input.GetKeyDown(Plugin.Config.Marker1Key))
+            if (InputHelper.GetKeyDown(Plugin.Config.Marker1Key))
             {
                 HandleMarkerToggle(locations, pos, Plugin.Config.Marker1Color, isRemoving);
             }
             // Check for Marker 2
-            else if (Input.GetKeyDown(Plugin.Config.Marker2Key))
+            else if (InputHelper.GetKeyDown(Plugin.Config.Marker2Key))
             {
                 HandleMarkerToggle(locations, pos, Plugin.Config.Marker2Color, isRemoving);
             }
             // Check for Marker 3
-            else if (Input.GetKeyDown(Plugin.Config.Marker3Key))
+            else if (InputHelper.GetKeyDown(Plugin.Config.Marker3Key))
             {
                 HandleMarkerToggle(locations, pos, Plugin.Config.Marker3Color, isRemoving);
             }

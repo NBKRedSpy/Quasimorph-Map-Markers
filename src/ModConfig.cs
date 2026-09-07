@@ -68,6 +68,11 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     public KeyCode RemovePlayerLocationOnDungeonModifierKey { get; set; } = KeyCode.LeftShift;
 
     /// <summary>
+    /// Enables the alternate display mode (hold Left Alt to toggle showing unsearched locations only).
+    /// </summary>
+    public bool EnableAltDisplay { get; set; } = true;
+
+    /// <summary>
     /// The font size to use for the marker's content text.
     /// </summary>
     public float FontSize { get; set; } = 5f;
@@ -106,12 +111,32 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// If true, will show the contents of items that have been searched (containers, corpses, floor items) when hovering over a cell, 
     /// even if there is no map marker there.
     /// </summary>
-    public bool ShowExploredItems { get; set; } = false;
+    public bool ShowExploredItems { get; set; } = true;
 
     /// <summary>
     /// On the mini map, objects have been searched will have an indicator added to it.
     /// </summary>
-    public bool ShowSearchedIndicator { get; set; } = false;
+    public bool ShowSearchedIndicator { get; set; } = true;
+
+    /// <summary>
+    /// If true, hide barrels while alt mode is enabled and showing unsearched locations.
+    /// </summary>
+    public bool HideBarrelsInAltMode { get; set; } = false;
+
+    /// <summary>
+    /// The color of the dot used to indicate a container/corpse that has not been searched and is currently being shown in unsearched mode on the mini map.
+    /// </summary>
+    public Color32 UnsearchedIndicatorColor { get; set; } = Color.magenta;
+
+    /// <summary>
+    /// The Color that is compatible with the MCM for the Unsearched Indicator
+    /// </summary>
+    [JsonIgnore]
+    public Color UnsearchedIndicatorColorTransform
+    {
+        get => (Color)UnsearchedIndicatorColor;
+        set => UnsearchedIndicatorColor = (Color32)value;
+    }
 
     /// <summary>
     /// The color of the dot used to indicate a searched container/corpse on the mini map.
@@ -142,8 +167,6 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
         get => (Color)EmptyIndicatorColor;
         set => EmptyIndicatorColor  = (Color32)value;
     }
-
-
 
     public ModConfig()
     {

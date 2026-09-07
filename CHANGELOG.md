@@ -1,3 +1,10 @@
+# 1.8.0
+* Added Unsearched mode.
+* Added alt mod to show only unsearched
+    * Added option to not include barrels.  Disabled by default.
+* Changed from Input to InputHelper for compatibility.
+* Changed search indicators to be enabled by default.
+
 # 1.7.1
 * Beta to 1.0 update.
 

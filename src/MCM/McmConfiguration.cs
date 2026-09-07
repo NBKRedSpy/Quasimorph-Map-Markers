@@ -29,10 +29,22 @@ namespace MapMarkers.MCM
                     @"On the minimap, add an indicator for any items that have been searched",
                     "Show Searched Indicator", "Search Indicator"),
 
+                CreateConfigProperty(nameof(ModConfig.EnableAltDisplay),
+                    @"Hold Left Alt to toggle an alternate display mode that shows only unsearched locations.",
+                    "Enable Alt Display","Search Indicator"),
+
+                CreateConfigProperty(nameof(ModConfig.HideBarrelsInAltMode),
+                    @"Hide barrels while the alt unsearched display mode is active.",
+                    "Hide Barrels in Alt Mode", "Search Indicator"),
+
+                CreateConfigProperty(nameof(ModConfig.UnsearchedIndicatorColorTransform),
+                    @"Used for Alt display mode.  The color of the unsearched indicator in the alt unsearched mode", 
+                    "Alt Unsearched Indicator Color", "Search Indicator"),
+
                 CreateConfigProperty(nameof(ModConfig.SearchedIndicatorColorTransform), 
                     @"The color of the searched indicator", "Searched Indicator Color", "Search Indicator"),
 
-                                CreateConfigProperty(nameof(ModConfig.EmptyIndicatorColorTransform),
+                CreateConfigProperty(nameof(ModConfig.EmptyIndicatorColorTransform),
                     @"The indicator color for containers that are empty", "Empty Indicator Color", "Search Indicator"),
 
                 #endregion
