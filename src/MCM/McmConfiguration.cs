@@ -2,8 +2,10 @@
 using MapMarkers.Utility;
 using ModConfigMenu;
 using ModConfigMenu.Contracts;
+using ModConfigMenu.Implementations;
 using ModConfigMenu.Objects;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Logger = MapMarkers.Utility.Logger;
 
@@ -15,6 +17,9 @@ namespace MapMarkers.MCM
 
         public override void Configure()
         {
+            //The list of object ids to hide.  Cannot currently be edited by MCM, so creating the text.
+            string hideItemListText = $"Alt Display Hide Items: {WarningColorElement}{string.Join(", ", Config.HideItemsList.ToList()).Trim()}</color>";
+
             ModConfigMenuAPI.RegisterModConfig("Map Markers", new List<IConfigValue>()
             {
                 CreateConfigProperty(nameof(ModConfig.FontSize),
@@ -33,9 +38,15 @@ namespace MapMarkers.MCM
                     @"Hold Left Alt to toggle an alternate display mode that shows only unsearched locations.",
                     "Enable Alt Display","Search Indicator"),
 
-                CreateConfigProperty(nameof(ModConfig.HideBarrelsInAltMode),
-                    @"Hide barrels while the alt unsearched display mode is active.",
-                    "Hide Barrels in Alt Mode", "Search Indicator"),
+                CreateConfigProperty(nameof(ModConfig.HideItemsInAltMode),
+                    @"Hide items while the alt unsearched display mode is active.",
+                    "Hide Items in Alt Mode", "Search Indicator"),
+
+                new TextBoxConfig("__Hide Items List", hideItemListText, "Hide Items in Alt Mode - Config File Only", hideItemListText,
+                    """
+                    A semi-colon delimited list of obstacle ids to hide when 'Hide Items in Alt Mode' is enabled. 
+                    This must be modified in the config file. 
+                    """, "Hide Items List"),
 
                 CreateConfigProperty(nameof(ModConfig.UnsearchedIndicatorColorTransform),
                     @"Used for Alt display mode.  The color of the unsearched indicator in the alt unsearched mode", 

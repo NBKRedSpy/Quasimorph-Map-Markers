@@ -18,16 +18,19 @@ namespace MapMarkers.Mcm
     /// </summary>
     /// <remarks>This is a prototype.  It has too many direct use external requirements.</remarks>
     /// <param name="config"></param>
-    internal abstract class McmConfigurationBase(ISave config)
+    internal abstract class McmConfigurationBase(ModConfig config)
     {
 
+        /// <summary>
+        /// This is a yellow color
+        /// </summary>
         protected const string WarningColorElement = "<color=#FBE343>";
         /// <summary>
         /// The common warning about the number keys being prefixed with Alpha.
         /// </summary>
         protected const string KeyCodeAlphaNote = $"{WarningColorElement}Note: The keys 1 through 0 are named Alpha1 through Alpha0.</color>";
 
-        public ISave Config { get; set; } = config;
+        public ModConfig Config { get; set; } = config;
 
         /// <summary>
         /// Used to set the defaults established by the ModConfig class.

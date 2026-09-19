@@ -3,6 +3,9 @@ using MapMarkers.Utility;
 using MGSC;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MapMarkers;
@@ -119,9 +122,26 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     public bool ShowSearchedIndicator { get; set; } = true;
 
     /// <summary>
-    /// If true, hide barrels while alt mode is enabled and showing unsearched locations.
+    /// If true, hide items while alt mode is enabled and showing unsearched locations.
     /// </summary>
-    public bool HideBarrelsInAltMode { get; set; } = false;
+    public bool HideItemsInAltMode { get; set; } = false;
+
+
+
+    /// <summary>
+    /// A semi-colon delimited list of obstacle ids to hide while alt mode is enabled and showing unsearched locations.
+    /// </summary>
+    public HashSet<string> HideItemsList { get; set; } =
+        new HashSet<string>(new string[] {    
+            "orange_barrel",
+            "water_tank",
+            "sink_1",
+            "toilet_1"
+        });
+
+    /// <summary>
+    /// The parsed, de-duplicated set of ids from <see cref="HideItemsList"/> used for fast lookups.
+    /// </summary>
 
     /// <summary>
     /// The color of the dot used to indicate a container/corpse that has not been searched and is currently being shown in unsearched mode on the mini map.
