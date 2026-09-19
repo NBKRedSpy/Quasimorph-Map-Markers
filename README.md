@@ -8,7 +8,9 @@ Do you have the floor scanner and are tired of having to hunt down the ten stora
 
 This mod adds the ability to add markers to the minimap, as well as show the search status of storage items.
 
-Hold alt to show only the storage items that have not been searched yet.  Optionally, this mode can ignore barrels.  Must be enabled in the settings.
+Hold alt to show only the storage items that have not been searched yet.  Optionally, this mode can hide items such as barrels, sinks, and toilets.  Must be enabled in the settings.
+
+The list of items to hide can be configured in the config file.  See the [Hide Items List](#hideitemslist) section.
 
 Colors, hotkeys, and other options can be changed via the Mods button on the main menu.
 
@@ -37,6 +39,9 @@ This mod supports the Mod Configuration Menu and is the preferred method for cha
 
 ## Config File
 The configuration file will be created on the first game run and can be found at `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\MapMarkers\config.json`.
+
+### HideItemsList
+`HideItemsList` is the list of obstacle ids that are hidden when `Hide Items in Alt Mode` is enabled.  This list can only be changed by editing the config file directly; it cannot be edited from the MCM menu.
 
 ### FontSize Note for MCM
 Note that there is a bug in the MCM where if the user drag highlights the number, the MCM can become confused and not save the change.

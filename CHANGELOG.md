@@ -1,3 +1,6 @@
+# 1.9.0
+* Added configurable list of hidden items in alt searched mode.
+
 # 1.8.0
 * Added Unsearched mode.
 * Added alt mod to show only unsearched

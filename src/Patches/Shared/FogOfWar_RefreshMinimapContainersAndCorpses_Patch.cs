@@ -37,9 +37,9 @@ namespace MapMarkers.Patches.Shared
 
                 if(Plugin.Config.ShowSearchedIndicator)
                 {
-                    bool hideBarrels = Plugin.Config.HideBarrelsInAltMode && MinimapScreen_Update_Patch.UnsearchedDisplayMode;
+                    bool hideItems = Plugin.Config.HideItemsInAltMode && MinimapScreen_Update_Patch.UnsearchedDisplayMode;
 
-                    AddSearchedAndEmptyIndicator(__instance, MinimapScreen_Update_Patch.UnsearchedDisplayMode, hideBarrels,
+                    AddSearchedAndEmptyIndicator(__instance, MinimapScreen_Update_Patch.UnsearchedDisplayMode, hideItems,
                         Plugin.Config.UnsearchedIndicatorColor, Plugin.Config.SearchedIndicatorColor, Plugin.Config.EmptyIndicatorColor);
                 }
                 
@@ -57,14 +57,14 @@ namespace MapMarkers.Patches.Shared
         /// <param name="fogOfWar">Source of the map data and mini map screen</param>
         /// <param name="searchedColor">The color for containers that were searched and not empty.</param>
         /// <param name="emptyColor">The color for empty containers.  This overrides the searched indicator.</param>
-        private static void AddSearchedAndEmptyIndicator(FogOfWar fogOfWar, bool showUnsearchedMode, bool hideBarrels, Color unsearchedColor, 
+        private static void AddSearchedAndEmptyIndicator(FogOfWar fogOfWar, bool showUnsearchedMode, bool hideItems, Color unsearchedColor, 
             Color searchedColor, Color emptyColor)
         {
 
             CellSearchInfo cellItemsState = new();
 
             SetFloorStates(fogOfWar, cellItemsState);
-            SetObstacleStates(fogOfWar, cellItemsState, hideBarrels);
+            SetObstacleStates(fogOfWar, cellItemsState, hideItems);
             AddUiIndicators(fogOfWar, showUnsearchedMode, unsearchedColor, searchedColor, emptyColor, cellItemsState);
         }
 
@@ -160,7 +160,7 @@ namespace MapMarkers.Patches.Shared
         /// </summary>
         /// <param name="fogOfWar"></param>
         /// <param name="cellItemsState"></param>
-        private static void SetObstacleStates(FogOfWar fogOfWar, CellSearchInfo cellItemsState, bool hideBarrels)
+        private static void SetObstacleStates(FogOfWar fogOfWar, CellSearchInfo cellItemsState, bool hideItems)
         {
             // Iterate through all obstacles on the map to find searched or empty containers and corpses.
             foreach (MapObstacle obstacle in fogOfWar._mapObstacles.Obstacles)
@@ -178,7 +178,7 @@ namespace MapMarkers.Patches.Shared
                     continue;
                 }
 
-                if(hideBarrels && obstacle.name == "orange_barrel")
+                if (hideItems && Plugin.Config.HideItemsList.Contains(obstacle.name))
                 {
                     continue;
                 }
