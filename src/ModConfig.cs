@@ -132,11 +132,15 @@ public class ModConfig : PersistentConfig<ModConfig>, ISave
     /// A semi-colon delimited list of obstacle ids to hide while alt mode is enabled and showing unsearched locations.
     /// </summary>
     public HashSet<string> HideItemsList { get; set; } =
-        new HashSet<string>(new string[] {    
+        new HashSet<string>(new string[] {
+            "blood_sink",
+            "extinguisher_holder",
+            "flowers_container",
             "orange_barrel",
-            "water_tank",
             "sink_1",
-            "toilet_1"
+            "toilet_1",
+            "toxic_barrel",
+            "water_tank",
         });
 
     /// <summary>

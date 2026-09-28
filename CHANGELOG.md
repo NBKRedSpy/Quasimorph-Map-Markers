@@ -1,3 +1,6 @@
+# 1.9.1
+* Added flowers, blood barrels, and fire extinguisher holders to the default alt mode black list.
+
 # 1.9.0
 * Added configurable list of hidden items in alt searched mode.
 
